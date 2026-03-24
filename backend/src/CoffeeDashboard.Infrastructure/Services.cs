@@ -36,14 +36,24 @@ public class LiveDashboardService(HttpClient httpClient) : IDashboardService
 
     public async Task<DashboardSummaryResponse> GetSummaryAsync(CancellationToken cancellationToken = default)
     {
-        var cryptoTask = GetCryptoCardsAsync(cancellationToken);
-        var newsTask = GetLatestNewsAsync(cancellationToken);
-        var fxTask = GetUsdVndCardAsync(cancellationToken);
-        var domesticPreciousTask = GetDomesticPreciousPricesAsync(cancellationToken);
-        var oilTask = GetOilCardAsync(cancellationToken);
-        var vnIndexTask = GetVnIndexCardAsync(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromSeconds(10));
 
-        await Task.WhenAll(cryptoTask, newsTask, fxTask, domesticPreciousTask, oilTask, vnIndexTask);
+        var cryptoTask = GetCryptoCardsAsync(cts.Token);
+        var newsTask = GetLatestNewsAsync(cts.Token);
+        var fxTask = GetUsdVndCardAsync(cts.Token);
+        var domesticPreciousTask = GetDomesticPreciousPricesAsync(cts.Token);
+        var oilTask = GetOilCardAsync(cts.Token);
+        var vnIndexTask = GetVnIndexCardAsync(cts.Token);
+
+        try
+        {
+            await Task.WhenAll(cryptoTask, newsTask, fxTask, domesticPreciousTask, oilTask, vnIndexTask);
+        }
+        catch
+        {
+            // swallow timeout exceptions; individual tasks already fallback to pending data
+        }
 
         var markets = new List<MarketCard>
         {
