@@ -11,7 +11,7 @@ public class DemoAuthService : IAuthService
 {
     public Task<LoginResponse?> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
     {
-        if (request.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) && request.Password == "123456")
+        if (request.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) && request.Password == "admin")
         {
             return Task.FromResult<LoginResponse?>(new LoginResponse(
                 AccessToken: "demo-token",
