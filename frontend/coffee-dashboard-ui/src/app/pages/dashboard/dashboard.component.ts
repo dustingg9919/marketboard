@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { DashboardSummaryResponse, MarketCard, NewsArticle } from '../../api.types';
@@ -35,7 +36,13 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setTitle(this.activeMenu);
     void this.loadDashboard();
+  }
+
+  setTitle(menu: string): void {
+    this.activeMenu = menu;
+    this.title.setTitle(`${menu} · marketboard`);
   }
 
   async loadDashboard(): Promise<void> {
@@ -141,8 +148,5 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     localStorage.removeItem('coffee-dashboard-auth');
     void this.router.navigateByUrl('/login');
-  }
-}
-n');
   }
 }
