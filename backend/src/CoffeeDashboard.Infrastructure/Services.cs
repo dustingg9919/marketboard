@@ -43,26 +43,32 @@ public class LiveDashboardService(HttpClient httpClient) : IDashboardService
         var oilTask = GetOilCardAsync(cancellationToken);
         var vnIndexTask = GetVnIndexCardAsync(cancellationToken);
 
-        await Task.WhenAll(cryptoTask, newsTask, fxTask, domesticPreciousTask, oilTask, vnIndexTask);
+        var crypto = await AwaitOrFallback(cryptoTask, new List<MarketCard>(), TimeSpan.FromSeconds(4));
+        var news = await AwaitOrFallback(newsTask, new List<NewsArticle>(), TimeSpan.FromSeconds(4));
+        var fx = await AwaitOrFallback(fxTask, PendingCard("USDVND", "USD/VND"), TimeSpan.FromSeconds(3));
+        var preciousFallback = (PendingCard("GOLD", "Giá vàng"), PendingCard("SILVER", "Giá bạc"));
+        var precious = await AwaitOrFallback(domesticPreciousTask, preciousFallback, TimeSpan.FromSeconds(4));
+        var oil = await AwaitOrFallback(oilTask, PendingCard("OIL", "Giá dầu"), TimeSpan.FromSeconds(3));
+        var vnindex = await AwaitOrFallback(vnIndexTask, PendingCard("VNINDEX", "VN-Index"), TimeSpan.FromSeconds(3));
 
         var markets = new List<MarketCard>
         {
             new() { Code = "COFFEE_DOMESTIC", Label = "Cà phê nội địa", Value = 0, Unit = string.Empty, Change = null, ChangePercent = null },
-            await fxTask,
+            fx,
             new() { Code = "LONDON_ROBUSTA", Label = "London Robusta", Value = 0, Unit = string.Empty, Change = null, ChangePercent = null },
-            (await domesticPreciousTask).Gold,
-            (await domesticPreciousTask).Silver,
-            await oilTask,
-            await vnIndexTask
+            precious.Gold,
+            precious.Silver,
+            oil,
+            vnindex
         };
 
-        markets.AddRange(await cryptoTask);
+        markets.AddRange(crypto);
 
         return new DashboardSummaryResponse
         {
             LastUpdatedAt = DateTime.UtcNow,
             Markets = markets,
-            LatestNews = await newsTask
+            LatestNews = news
         };
     }
 
@@ -322,6 +328,17 @@ public class LiveDashboardService(HttpClient httpClient) : IDashboardService
             })
             .Where(x => !string.IsNullOrWhiteSpace(x.Title))
             .ToList();
+    }
+
+    private static async Task<T> AwaitOrFallback<T>(Task<T> task, T fallback, TimeSpan timeout)
+    {
+        var completed = await Task.WhenAny(task, Task.Delay(timeout));
+        if (completed == task)
+        {
+            return await task;
+        }
+
+        return fallback;
     }
 
     private static MarketCard PendingCard(string code, string label) => new()

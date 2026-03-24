@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IAuthService, DemoAuthService>();
 builder.Services.AddHttpClient<IDashboardService, LiveDashboardService>(client =>
 {
+    client.Timeout = TimeSpan.FromSeconds(8);
     client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) CoffeeDashboard/1.0");
     client.DefaultRequestHeaders.Accept.ParseAdd("application/json, application/xml, text/xml, */*");
 });
