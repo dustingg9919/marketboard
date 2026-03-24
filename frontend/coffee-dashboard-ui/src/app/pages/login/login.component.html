@@ -1,20 +1,24 @@
 <div class="login-shell">
-  <div class="login-card">
-    <h1>marketboard</h1>
-    <p>Instant access to trading from comfort of your home</p>
+  <section class="login-visual"></section>
 
-    <label>Email</label>
-    <input [(ngModel)]="username" type="text" placeholder="Enter Email" />
+  <section class="login-panel">
+    <div class="brand">marketboard</div>
+    <h1>Instant access to trading from comfort of your home</h1>
 
-    <label>Password</label>
-    <input [(ngModel)]="password" type="password" placeholder="Enter Password" />
+    <div class="form">
+      <label>Email</label>
+      <input [(ngModel)]="username" type="text" placeholder="Enter Email" />
 
-    <button (click)="login()" [disabled]="loading">
-      {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
-    </button>
+      <label>Password</label>
+      <input [(ngModel)]="password" type="password" placeholder="Enter Password" />
 
-    <div class="error" *ngIf="error">{{ error }}</div>
+      <button (click)="login()" [disabled]="loading">
+        {{ loading ? 'Đang đăng nhập...' : 'Enter' }}
+      </button>
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+    </div>
 
     <footer>© 2026 Thái Nguyên. All rights reserved.</footer>
-  </div>
+  </section>
 </div>
