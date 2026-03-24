@@ -1,0 +1,15 @@
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\bin\Release\net8.0\CoffeeDashboard.Application.deps.json
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\bin\Release\net8.0\CoffeeDashboard.Application.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\bin\Release\net8.0\CoffeeDashboard.Application.pdb
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\bin\Release\net8.0\CoffeeDashboard.Domain.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\bin\Release\net8.0\CoffeeDashboard.Domain.pdb
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.AssemblyInfo.cs
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDa.0706C77B.Up2Date
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\refint\CoffeeDashboard.Application.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\CoffeeDashboard.Application.pdb
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Application\obj\Release\net8.0\ref\CoffeeDashboard.Application.dll

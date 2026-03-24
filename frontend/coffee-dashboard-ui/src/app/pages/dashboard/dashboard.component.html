@@ -1,0 +1,146 @@
+<div class="dashboard-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">☕</div>
+      <div>
+        <div class="brand-title">CoffeeBoard</div>
+        <div class="brand-sub">Market Intelligence</div>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item active">Dashboard</a>
+      <a class="menu-item">Markets</a>
+      <a class="menu-item">Crypto</a>
+      <a class="menu-item">News</a>
+      <a class="menu-item">Reports</a>
+    </nav>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Last update</div>
+      <div class="sidebar-value">{{ lastUpdated || 'Đang tải...' }}</div>
+      <div class="sidebar-note">Realtime shell + live feeds</div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Daily dashboard</div>
+        <h1>Market & Commodity Overview</h1>
+        <p>Tổng hợp cà phê, forex, crypto, hàng hóa và tin tức trong một màn hình.</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="ghost">Export</button>
+        <button class="primary" (click)="logout()">Đăng xuất</button>
+      </div>
+    </header>
+
+    <section class="panel loading-panel" *ngIf="loading">Đang tải dữ liệu từ backend...</section>
+    <section class="panel error-panel" *ngIf="error">{{ error }}</section>
+
+    <ng-container *ngIf="!loading && !error">
+      <section class="hero-grid">
+        <article class="hero-card" *ngFor="let card of heroCards">
+          <div class="card-head">
+            <span class="label">{{ card.label }}</span>
+            <span class="badge" [ngClass]="getChangeClass(card)">{{ formatChange(card) }}</span>
+          </div>
+          <div class="hero-value pending-value">{{ formatValue(card.value, card) }}</div>
+          <div class="unit">{{ formatUnit(card) }}</div>
+          <div class="secondary-line" *ngIf="hasSecondaryValue(card)">
+            {{ formatSecondaryValue(card) }} · {{ card.secondaryUnit }}
+          </div>
+        </article>
+      </section>
+
+      <section class="chart-grid">
+        <article class="panel chart-panel chart-primary">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">Market trend</div>
+              <h2>Commodity Overview</h2>
+            </div>
+            <span class="chip">7 ngày</span>
+          </div>
+
+          <div class="chart-placeholder">
+            <div class="curve curve-a"></div>
+            <div class="curve curve-b"></div>
+            <div class="chart-legend">
+              <span>Cà phê</span>
+              <span>USD/VND</span>
+              <span>London</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel chart-panel chart-secondary">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">Crypto</div>
+              <h2>BTC & Altcoin Heat</h2>
+            </div>
+            <span class="chip success">Live</span>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat" *ngFor="let card of cards.slice(3, 7)">
+              <span>{{ card.label }}</span>
+              <strong>{{ formatValue(card.value, card) }}</strong>
+              <small [ngClass]="getChangeClass(card)">{{ formatChange(card) }}</small>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="commodity-grid">
+        <article class="market-tile" *ngFor="let card of commodityCards">
+          <div class="tile-top">
+            <span>{{ card.label }}</span>
+            <span class="dot" [ngClass]="getChangeClass(card)"></span>
+          </div>
+          <div class="tile-value pending-value">{{ formatValue(card.value, card) }}</div>
+          <div class="tile-meta">{{ formatUnit(card) }} · {{ formatChange(card) }}</div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel news-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">VnExpress RSS</div>
+              <h2>Tin tức mới nhất</h2>
+            </div>
+            <span class="chip">Top 5</span>
+          </div>
+
+          <div class="news-list">
+            <a class="news-item" *ngFor="let item of news" [href]="item.url" target="_blank">
+              <div class="news-category">{{ item.category }}</div>
+              <div class="news-title">{{ item.title }}</div>
+              <div class="news-summary">{{ item.summary }}</div>
+            </a>
+          </div>
+        </article>
+
+        <article class="panel status-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">System</div>
+              <h2>Data Pipeline</h2>
+            </div>
+            <span class="chip success">Healthy</span>
+          </div>
+
+          <div class="status-list">
+            <div class="status-row" *ngFor="let item of ['Crypto feed','VNExpress RSS','USD/VND','Giá cà phê','London coffee','Giá dầu','Giá vàng','Giá bạc','VN-Index']">
+              <span>{{ item }}</span>
+              <strong>{{ liveStatus(item) }}</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+    </ng-container>
+  </main>
+</div>

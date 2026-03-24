@@ -1,0 +1,19 @@
+<div class="login-shell">
+  <div class="login-card">
+    <h1>Coffee Dashboard</h1>
+    <p>Đăng nhập bản MVP demo</p>
+
+    <label>Tài khoản</label>
+    <input [(ngModel)]="username" type="text" />
+
+    <label>Mật khẩu</label>
+    <input [(ngModel)]="password" type="password" />
+
+    <button (click)="login()" [disabled]="loading">
+      {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
+    </button>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+    <div class="hint">Demo account: admin / 123456</div>
+  </div>
+</div>

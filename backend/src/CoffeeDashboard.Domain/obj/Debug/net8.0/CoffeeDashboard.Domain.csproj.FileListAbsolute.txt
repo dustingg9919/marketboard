@@ -1,0 +1,11 @@
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\bin\Debug\net8.0\CoffeeDashboard.Domain.deps.json
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\bin\Debug\net8.0\CoffeeDashboard.Domain.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\bin\Debug\net8.0\CoffeeDashboard.Domain.pdb
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.AssemblyInfo.cs
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\refint\CoffeeDashboard.Domain.dll
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\CoffeeDashboard.Domain.pdb
+C:\Users\PC\Desktop\itemOC\coffee-dashboard-mvp\backend\src\CoffeeDashboard.Domain\obj\Debug\net8.0\ref\CoffeeDashboard.Domain.dll

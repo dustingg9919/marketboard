@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "qMbRMUQsE9cB0qn7DXWy8ddCfxcRtBK5C8wPk8xiJp0=",
+  "Source": "CoffeeDashboard.Api",
+  "BasePath": "_content/CoffeeDashboard.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
