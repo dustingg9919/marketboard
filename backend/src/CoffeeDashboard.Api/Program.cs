@@ -44,6 +44,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors("frontend");
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.MapGet("/", () => Results.Ok("marketboard-api"));
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 app.MapControllers();
 
 app.Run();
