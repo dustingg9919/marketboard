@@ -46,7 +46,7 @@ public class LiveDashboardService(HttpClient httpClient) : IDashboardService
         var crypto = await AwaitOrFallback(cryptoTask, new List<MarketCard>(), TimeSpan.FromSeconds(4));
         var news = await AwaitOrFallback(newsTask, new List<NewsArticle>(), TimeSpan.FromSeconds(4));
         var fx = await AwaitOrFallback(fxTask, PendingCard("USDVND", "USD/VND"), TimeSpan.FromSeconds(3));
-        var preciousFallback = (PendingCard("GOLD", "Giá vàng"), PendingCard("SILVER", "Giá bạc"));
+        var preciousFallback = (Gold: PendingCard("GOLD", "Giá vàng"), Silver: PendingCard("SILVER", "Giá bạc"));
         var precious = await AwaitOrFallback(domesticPreciousTask, preciousFallback, TimeSpan.FromSeconds(4));
         var oil = await AwaitOrFallback(oilTask, PendingCard("OIL", "Giá dầu"), TimeSpan.FromSeconds(3));
         var vnindex = await AwaitOrFallback(vnIndexTask, PendingCard("VNINDEX", "VN-Index"), TimeSpan.FromSeconds(3));
