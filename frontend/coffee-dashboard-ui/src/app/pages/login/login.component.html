@@ -1,19 +1,20 @@
 <div class="login-shell">
   <div class="login-card">
-    <h1>Coffee Dashboard</h1>
-    <p>Đăng nhập bản MVP demo</p>
+    <h1>marketboard</h1>
+    <p>Instant access to trading from comfort of your home</p>
 
-    <label>Tài khoản</label>
-    <input [(ngModel)]="username" type="text" />
+    <label>Email</label>
+    <input [(ngModel)]="username" type="text" placeholder="Enter Email" />
 
-    <label>Mật khẩu</label>
-    <input [(ngModel)]="password" type="password" />
+    <label>Password</label>
+    <input [(ngModel)]="password" type="password" placeholder="Enter Password" />
 
     <button (click)="login()" [disabled]="loading">
       {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
     </button>
 
     <div class="error" *ngIf="error">{{ error }}</div>
-    <div class="hint">Demo account: admin / 123456</div>
+
+    <footer>© 2026 Thái Nguyên. All rights reserved.</footer>
   </div>
 </div>
