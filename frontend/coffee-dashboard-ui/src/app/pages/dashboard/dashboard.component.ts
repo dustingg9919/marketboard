@@ -25,9 +25,13 @@ export class DashboardComponent implements OnInit {
     { code: 'VNINDEX', label: 'VN-Index', value: null, unit: '', changePercent: null }
   ];
 
+  readonly menuItems = ['Dashboard', 'Markets', 'Crypto', 'News', 'Reports'];
+  activeMenu = 'Dashboard';
+
   constructor(
     private readonly router: Router,
-    private readonly apiService: ApiService
+    private readonly apiService: ApiService,
+    private readonly title: Title
   ) {}
 
   ngOnInit(): void {
@@ -137,5 +141,8 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     localStorage.removeItem('coffee-dashboard-auth');
     void this.router.navigateByUrl('/login');
+  }
+}
+n');
   }
 }

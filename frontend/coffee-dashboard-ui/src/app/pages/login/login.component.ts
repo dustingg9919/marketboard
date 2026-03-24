@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 
@@ -12,15 +13,18 @@ import { ApiService } from '../../api.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username = 'admin';
-  password = '123456';
+  username = '';
+  password = '';
   loading = false;
   error = '';
 
   constructor(
     private readonly router: Router,
-    private readonly apiService: ApiService
-  ) {}
+    private readonly apiService: ApiService,
+    private readonly title: Title
+  ) {
+    this.title.setTitle('marketboard');
+  }
 
   async login(): Promise<void> {
     this.loading = true;
