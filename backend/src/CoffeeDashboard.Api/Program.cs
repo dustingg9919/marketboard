@@ -13,10 +13,11 @@ builder.Services.AddSingleton<IAuthService, DemoAuthService>();
 
 builder.Services.AddDbContext<DashboardDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("Postgres");
+    var connectionString = builder.Configuration.GetConnectionString("Postgres")
+                           ?? builder.Configuration["DATABASE_URL"];
     if (string.IsNullOrWhiteSpace(connectionString))
     {
-        throw new InvalidOperationException("Missing ConnectionStrings:Postgres");
+        throw new InvalidOperationException("Missing ConnectionStrings:Postgres or DATABASE_URL");
     }
 
     options.UseNpgsql(connectionString);
