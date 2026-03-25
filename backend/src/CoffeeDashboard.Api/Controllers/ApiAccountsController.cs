@@ -1,75 +1,156 @@
+using CoffeeDashboard.Domain.Entities;
+using CoffeeDashboard.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeDashboard.Api.Controllers;
 
 [ApiController]
 [Route("api/api-accounts")]
-public class ApiAccountsController(ApiAccountStore store) : ControllerBase
+public class ApiAccountsController(DashboardDbContext dbContext) : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetAll() => Ok(store.GetAll());
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var accounts = await dbContext.ApiAccounts
+            .OrderByDescending(x => x.IsCurrent)
+            .ThenBy(x => x.Name)
+            .ToListAsync(cancellationToken);
+
+        return Ok(accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.IsCurrent)));
+    }
 
     [HttpPost]
-    public IActionResult Add([FromBody] ApiAccountCreateRequest request)
+    public async Task<IActionResult> Add([FromBody] ApiAccountCreateRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
             return BadRequest(new { message = "Name is required" });
         }
 
-        var account = store.AddOrUpdate(request.Name.Trim(), request.Status?.Trim() ?? "Unknown");
-        return Ok(account);
+        var name = request.Name.Trim();
+        var status = request.Status?.Trim() ?? "Unknown";
+
+        var existing = await dbContext.ApiAccounts
+            .FirstOrDefaultAsync(x => x.Name == name, cancellationToken);
+
+        if (existing != null)
+        {
+            existing.Status = status;
+            existing.UpdatedAt = DateTime.UtcNow;
+        }
+        else
+        {
+            var isCurrent = !await dbContext.ApiAccounts.AnyAsync(cancellationToken);
+            dbContext.ApiAccounts.Add(new ApiAccountRecord
+            {
+                Name = name,
+                Status = status,
+                IsCurrent = isCurrent
+            });
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        var saved = await dbContext.ApiAccounts
+            .FirstAsync(x => x.Name == name, cancellationToken);
+        return Ok(new ApiAccountDto(saved.Name, saved.Status, saved.IsCurrent));
     }
 
     [HttpPut]
-    public IActionResult Update([FromBody] ApiAccountUpdateRequest request)
+    public async Task<IActionResult> Update([FromBody] ApiAccountUpdateRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
             return BadRequest(new { message = "Name is required" });
         }
 
-        var updated = store.Update(request.Name.Trim(), request.Status?.Trim() ?? "Unknown");
-        if (updated == null)
+        var existing = await dbContext.ApiAccounts
+            .FirstOrDefaultAsync(x => x.Name == request.Name.Trim(), cancellationToken);
+
+        if (existing == null)
         {
             return NotFound(new { message = "Account not found" });
         }
 
-        return Ok(updated);
+        existing.Status = request.Status?.Trim() ?? existing.Status;
+        existing.UpdatedAt = DateTime.UtcNow;
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return Ok(new ApiAccountDto(existing.Name, existing.Status, existing.IsCurrent));
     }
 
     [HttpDelete]
-    public IActionResult Delete([FromBody] ApiAccountDeleteRequest request)
+    public async Task<IActionResult> Delete([FromBody] ApiAccountDeleteRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
             return BadRequest(new { message = "Name is required" });
         }
 
-        var removed = store.Delete(request.Name.Trim());
-        if (!removed)
+        var existing = await dbContext.ApiAccounts
+            .FirstOrDefaultAsync(x => x.Name == request.Name.Trim(), cancellationToken);
+
+        if (existing == null)
         {
             return NotFound(new { message = "Account not found" });
         }
 
-        return Ok(store.GetAll());
+        var wasCurrent = existing.IsCurrent;
+        dbContext.ApiAccounts.Remove(existing);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        if (wasCurrent)
+        {
+            var fallback = await dbContext.ApiAccounts
+                .OrderBy(x => x.Name)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (fallback != null)
+            {
+                fallback.IsCurrent = true;
+                fallback.UpdatedAt = DateTime.UtcNow;
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+        }
+
+        var accounts = await dbContext.ApiAccounts
+            .OrderByDescending(x => x.IsCurrent)
+            .ThenBy(x => x.Name)
+            .ToListAsync(cancellationToken);
+
+        return Ok(accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.IsCurrent)));
     }
 
     [HttpPut("current")]
-    public IActionResult SetCurrent([FromBody] ApiAccountCurrentRequest request)
+    public async Task<IActionResult> SetCurrent([FromBody] ApiAccountCurrentRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
             return BadRequest(new { message = "Name is required" });
         }
 
-        var updated = store.SetCurrent(request.Name.Trim());
-        if (!updated)
+        var name = request.Name.Trim();
+        var accounts = await dbContext.ApiAccounts.ToListAsync(cancellationToken);
+
+        if (accounts.Count == 0)
         {
             return NotFound(new { message = "Account not found" });
         }
 
-        return Ok(store.GetAll());
+        if (!accounts.Any(a => a.Name == name))
+        {
+            return NotFound(new { message = "Account not found" });
+        }
+
+        foreach (var account in accounts)
+        {
+            account.IsCurrent = account.Name == name;
+            account.UpdatedAt = DateTime.UtcNow;
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return Ok(accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.IsCurrent)));
     }
 }
 
@@ -79,86 +160,3 @@ public record ApiAccountDeleteRequest(string Name);
 public record ApiAccountCurrentRequest(string Name);
 
 public record ApiAccountDto(string Name, string Status, bool Current);
-
-public class ApiAccountStore
-{
-    private readonly object _lock = new();
-    private readonly List<ApiAccountDto> _accounts = new();
-
-    public IReadOnlyList<ApiAccountDto> GetAll()
-    {
-        lock (_lock)
-        {
-            return _accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.Current)).ToList();
-        }
-    }
-
-    public ApiAccountDto AddOrUpdate(string name, string status)
-    {
-        lock (_lock)
-        {
-            var existing = _accounts.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (existing != null)
-            {
-                _accounts.Remove(existing);
-                var updated = new ApiAccountDto(existing.Name, status, existing.Current);
-                _accounts.Add(updated);
-                return updated;
-            }
-
-            var account = new ApiAccountDto(name, status, _accounts.Count == 0);
-            _accounts.Add(account);
-            return account;
-        }
-    }
-
-    public ApiAccountDto? Update(string name, string status)
-    {
-        lock (_lock)
-        {
-            var existing = _accounts.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (existing == null) return null;
-
-            _accounts.Remove(existing);
-            var updated = new ApiAccountDto(existing.Name, status, existing.Current);
-            _accounts.Add(updated);
-            return updated;
-        }
-    }
-
-    public bool Delete(string name)
-    {
-        lock (_lock)
-        {
-            var existing = _accounts.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (existing == null) return false;
-
-            var wasCurrent = existing.Current;
-            _accounts.Remove(existing);
-
-            if (wasCurrent && _accounts.Count > 0)
-            {
-                var first = _accounts[0];
-                _accounts[0] = first with { Current = true };
-            }
-
-            return true;
-        }
-    }
-
-    public bool SetCurrent(string name)
-    {
-        lock (_lock)
-        {
-            var found = false;
-            for (var i = 0; i < _accounts.Count; i++)
-            {
-                var account = _accounts[i];
-                var isCurrent = account.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
-                if (isCurrent) found = true;
-                _accounts[i] = account with { Current = isCurrent };
-            }
-            return found;
-        }
-    }
-}

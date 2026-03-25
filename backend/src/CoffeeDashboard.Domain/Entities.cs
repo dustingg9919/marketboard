@@ -36,3 +36,38 @@ public class NewsArticle
     public string Url { get; set; } = string.Empty;
     public DateTime PublishedAt { get; set; } = DateTime.UtcNow;
 }
+
+public class MarketAsset
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Code { get; set; } = string.Empty;
+    public string Label { get; set; } = string.Empty;
+    public string Unit { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class MarketSnapshot
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid MarketAssetId { get; set; }
+    public MarketAsset? MarketAsset { get; set; }
+    public DateOnly SnapshotDate { get; set; }
+    public decimal Value { get; set; }
+    public string Unit { get; set; } = string.Empty;
+    public decimal? SecondaryValue { get; set; }
+    public string? SecondaryUnit { get; set; }
+    public decimal? Change { get; set; }
+    public decimal? ChangePercent { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class ApiAccountRecord
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Name { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public bool IsCurrent { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+}
