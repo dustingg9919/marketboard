@@ -1,5 +1,6 @@
 using CoffeeDashboard.Application.Contracts;
 using CoffeeDashboard.Infrastructure.Services;
+using CoffeeDashboard.Api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
