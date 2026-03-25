@@ -127,6 +127,14 @@ export class DashboardComponent implements OnInit {
     return [...this.cards.filter(card => !excluded.has(card.code)), ...this.quickStats.filter(card => !excluded.has(card.code))];
   }
 
+  get cryptoCards(): MarketCard[] {
+    const cryptoCodes = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'ADAUSDT', 'DOGEUSDT'];
+    const fromData = this.cards.filter(card => cryptoCodes.includes(card.code));
+    const fallback = this.cards.filter(card => !this.quickStats.some(s => s.code === card.code));
+    const source = fromData.length ? fromData : fallback;
+    return source.slice(0, 5);
+  }
+
   private createPendingCard(code: string): MarketCard {
     const map: Record<string, string> = {
       COFFEE_DOMESTIC: 'Cà phê nội địa',

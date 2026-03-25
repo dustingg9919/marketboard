@@ -57,6 +57,24 @@
         </article>
       </section>
 
+      <section class="panel news-panel priority-news" id="section-news">
+        <div class="panel-head">
+          <div>
+            <div class="eyebrow">VnExpress RSS</div>
+            <h2>Tin tức mới nhất</h2>
+          </div>
+          <span class="chip">Top 5</span>
+        </div>
+
+        <div class="news-list">
+          <a class="news-item" *ngFor="let item of news" [href]="item.url" target="_blank">
+            <div class="news-category">{{ item.category }}</div>
+            <div class="news-title">{{ item.title }}</div>
+            <div class="news-summary">{{ item.summary }}</div>
+          </a>
+        </div>
+      </section>
+
       <section class="chart-grid" id="section-markets">
         <article class="panel chart-panel chart-primary">
           <div class="panel-head">
@@ -98,7 +116,7 @@
       </section>
 
       <section class="commodity-grid" id="section-crypto">
-        <article class="market-tile" *ngFor="let card of commodityCards">
+        <article class="market-tile" *ngFor="let card of cryptoCards">
           <div class="tile-top">
             <span>{{ card.label }}</span>
             <span class="dot" [ngClass]="getChangeClass(card)"></span>
@@ -108,25 +126,7 @@
         </article>
       </section>
 
-      <section class="bottom-grid" id="section-news">
-        <article class="panel news-panel">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow">VnExpress RSS</div>
-              <h2>Tin tức mới nhất</h2>
-            </div>
-            <span class="chip">Top 5</span>
-          </div>
-
-          <div class="news-list">
-            <a class="news-item" *ngFor="let item of news" [href]="item.url" target="_blank">
-              <div class="news-category">{{ item.category }}</div>
-              <div class="news-title">{{ item.title }}</div>
-              <div class="news-summary">{{ item.summary }}</div>
-            </a>
-          </div>
-        </article>
-
+      <section class="bottom-grid" id="section-reports">
         <article class="panel status-panel">
           <div class="panel-head">
             <div>
@@ -146,7 +146,7 @@
       </section>
 
       <section class="panel api-panel" id="section-api">
-        <div class="panel-head api-panel-head" id="section-reports">
+        <div class="panel-head api-panel-head">
           <div>
             <div class="eyebrow">API</div>
             <h2>API Dashboard</h2>
