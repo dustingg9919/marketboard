@@ -27,8 +27,16 @@ export class DashboardComponent implements OnInit {
     { code: 'VNINDEX', label: 'VN-Index', value: null, unit: '', changePercent: null }
   ];
 
-  readonly menuItems = ['Dashboard', 'Markets', 'Crypto', 'News', 'Reports', 'API'];
+  readonly menuItems = [
+    { label: 'Dashboard', id: 'section-dashboard' },
+    { label: 'Markets', id: 'section-markets' },
+    { label: 'Crypto', id: 'section-crypto' },
+    { label: 'News', id: 'section-news' },
+    { label: 'Reports', id: 'section-reports' },
+    { label: 'API', id: 'section-api' }
+  ];
   activeMenu = 'Dashboard';
+  private sectionObserver?: IntersectionObserver;
 
   apiAccounts: ApiAccount[] = [];
   apiForm = {
@@ -48,11 +56,45 @@ export class DashboardComponent implements OnInit {
     this.setTitle(this.activeMenu);
     void this.loadDashboard();
     void this.loadApiAccounts();
+    this.initSectionObserver();
   }
 
   setTitle(menu: string): void {
     this.activeMenu = menu;
     this.title.setTitle(`${menu} · marketboard`);
+  }
+
+  scrollToSection(item: { label: string; id: string }): void {
+    const el = document.getElementById(item.id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.setTitle(item.label);
+  }
+
+  private initSectionObserver(): void {
+    if (this.sectionObserver) return;
+    const options: IntersectionObserverInit = {
+      root: null,
+      rootMargin: '-30% 0px -55% 0px',
+      threshold: 0
+    };
+
+    this.sectionObserver = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+      const match = this.menuItems.find(item => item.id === visible.target.id);
+      if (match) this.setTitle(match.label);
+    }, options);
+
+    setTimeout(() => {
+      this.menuItems.forEach(item => {
+        const el = document.getElementById(item.id);
+        if (el) this.sectionObserver?.observe(el);
+      });
+    }, 0);
   }
 
   async loadDashboard(): Promise<void> {

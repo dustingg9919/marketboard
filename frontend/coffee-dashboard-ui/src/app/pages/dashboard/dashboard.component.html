@@ -12,10 +12,10 @@
       <a
         class="menu-item"
         *ngFor="let item of menuItems"
-        [class.active]="activeMenu === item"
-        (click)="setTitle(item)"
+        [class.active]="activeMenu === item.label"
+        (click)="scrollToSection(item)"
       >
-        {{ item }}
+        {{ item.label }}
       </a>
     </nav>
 
@@ -43,7 +43,7 @@
     <section class="panel error-panel" *ngIf="error">{{ error }}</section>
 
     <ng-container *ngIf="!loading && !error">
-      <section class="hero-grid">
+      <section class="hero-grid" id="section-dashboard">
         <article class="hero-card" *ngFor="let card of heroCards">
           <div class="card-head">
             <span class="label">{{ card.label }}</span>
@@ -57,7 +57,7 @@
         </article>
       </section>
 
-      <section class="chart-grid">
+      <section class="chart-grid" id="section-markets">
         <article class="panel chart-panel chart-primary">
           <div class="panel-head">
             <div>
@@ -97,7 +97,7 @@
         </article>
       </section>
 
-      <section class="commodity-grid">
+      <section class="commodity-grid" id="section-crypto">
         <article class="market-tile" *ngFor="let card of commodityCards">
           <div class="tile-top">
             <span>{{ card.label }}</span>
@@ -108,7 +108,7 @@
         </article>
       </section>
 
-      <section class="bottom-grid">
+      <section class="bottom-grid" id="section-news">
         <article class="panel news-panel">
           <div class="panel-head">
             <div>
@@ -145,8 +145,8 @@
         </article>
       </section>
 
-      <section class="panel api-panel">
-        <div class="panel-head api-panel-head">
+      <section class="panel api-panel" id="section-api">
+        <div class="panel-head api-panel-head" id="section-reports">
           <div>
             <div class="eyebrow">API</div>
             <h2>API Dashboard</h2>
