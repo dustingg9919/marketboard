@@ -30,3 +30,9 @@ export interface DashboardSummaryResponse {
   markets: MarketCard[];
   latestNews: NewsArticle[];
 }
+
+export interface ApiAccount {
+  name: string;
+  status: string;
+  current: boolean;
+}

@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
-import { DashboardSummaryResponse, MarketCard, NewsArticle } from '../../api.types';
+import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '../../api.types';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -26,8 +27,16 @@ export class DashboardComponent implements OnInit {
     { code: 'VNINDEX', label: 'VN-Index', value: null, unit: '', changePercent: null }
   ];
 
-  readonly menuItems = ['Dashboard', 'Markets', 'Crypto', 'News', 'Reports'];
+  readonly menuItems = ['Dashboard', 'Markets', 'Crypto', 'News', 'Reports', 'API'];
   activeMenu = 'Dashboard';
+
+  apiAccounts: ApiAccount[] = [];
+  apiForm = {
+    name: '',
+    status: ''
+  };
+
+  editing: ApiAccount | null = null;
 
   constructor(
     private readonly router: Router,
@@ -38,6 +47,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle(this.activeMenu);
     void this.loadDashboard();
+    void this.loadApiAccounts();
   }
 
   setTitle(menu: string): void {
@@ -148,5 +158,61 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     localStorage.removeItem('coffee-dashboard-auth');
     void this.router.navigateByUrl('/login');
+  }
+
+  async loadApiAccounts(): Promise<void> {
+    try {
+      this.apiAccounts = await this.apiService.getApiAccounts();
+    } catch {
+      // keep silent for demo
+    }
+  }
+
+  async addApiAccount(): Promise<void> {
+    if (!this.apiForm.name.trim()) return;
+
+    try {
+      await this.apiService.addApiAccount(this.apiForm.name.trim(), this.apiForm.status.trim());
+      this.apiForm = { name: '', status: '' };
+      await this.loadApiAccounts();
+    } catch {
+      // ignore for demo
+    }
+  }
+
+  startEdit(account: ApiAccount): void {
+    this.editing = { ...account };
+  }
+
+  cancelEdit(): void {
+    this.editing = null;
+  }
+
+  async saveEdit(): Promise<void> {
+    if (!this.editing) return;
+
+    try {
+      await this.apiService.updateApiAccount(this.editing.name, this.editing.status);
+      this.editing = null;
+      await this.loadApiAccounts();
+    } catch {
+      // ignore for demo
+    }
+  }
+
+  async deleteAccount(account: ApiAccount): Promise<void> {
+    try {
+      this.apiAccounts = await this.apiService.deleteApiAccount(account.name);
+    } catch {
+      // ignore for demo
+    }
+  }
+
+  async setCurrentApiAccount(target: ApiAccount): Promise<void> {
+    try {
+      this.apiAccounts = await this.apiService.setCurrentApiAccount(target.name);
+    } catch {
+      // ignore for demo
+    }
   }
 }

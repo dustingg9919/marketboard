@@ -9,11 +9,14 @@
     </div>
 
     <nav class="menu">
-      <a class="menu-item active">Dashboard</a>
-      <a class="menu-item">Markets</a>
-      <a class="menu-item">Crypto</a>
-      <a class="menu-item">News</a>
-      <a class="menu-item">Reports</a>
+      <a
+        class="menu-item"
+        *ngFor="let item of menuItems"
+        [class.active]="activeMenu === item"
+        (click)="setTitle(item)"
+      >
+        {{ item }}
+      </a>
     </nav>
 
     <div class="sidebar-card">
@@ -140,6 +143,80 @@
             </div>
           </div>
         </article>
+      </section>
+
+      <section class="panel api-panel">
+        <div class="panel-head api-panel-head">
+          <div>
+            <div class="eyebrow">API</div>
+            <h2>API Dashboard</h2>
+            <p>Danh sách account (nhập tay) và trạng thái hiện tại.</p>
+          </div>
+          <span class="chip">Manual</span>
+        </div>
+
+        <form class="api-form" (submit)="$event.preventDefault(); addApiAccount()">
+          <label>
+            <span>Name</span>
+            <input type="text" [(ngModel)]="apiForm.name" name="apiName" placeholder="Account name" />
+          </label>
+          <label>
+            <span>Status</span>
+            <input type="text" [(ngModel)]="apiForm.status" name="apiStatus" placeholder="Healthy / Caution / Down" />
+          </label>
+          <button class="primary" type="submit">Add</button>
+        </form>
+
+        <form
+          class="api-form edit-form"
+          *ngIf="editing"
+          (submit)="$event.preventDefault(); saveEdit()"
+        >
+          <label>
+            <span>Editing</span>
+            <input type="text" [value]="editing.name" disabled />
+          </label>
+          <label>
+            <span>Status</span>
+            <input type="text" [(ngModel)]="editing.status" name="editStatus" />
+          </label>
+          <div class="edit-actions">
+            <button class="ghost" type="button" (click)="cancelEdit()">Cancel</button>
+            <button class="primary" type="submit">Save</button>
+          </div>
+        </form>
+
+        <div class="api-grid">
+          <article class="api-card" *ngFor="let account of apiAccounts">
+            <div class="api-card-head">
+              <div>
+                <div class="api-title">{{ account.name }}</div>
+                <div class="api-sub">{{ account.status }}</div>
+              </div>
+              <label class="api-radio">
+                <input
+                  type="radio"
+                  name="currentApi"
+                  [checked]="account.current"
+                  (change)="setCurrentApiAccount(account)"
+                />
+                <span>Current</span>
+              </label>
+            </div>
+
+            <div class="api-meta">
+              <span class="badge" [ngClass]="account.current ? 'positive' : 'neutral'">
+                {{ account.current ? 'Current' : 'Standby' }}
+              </span>
+              <span class="api-quota">Status: {{ account.status }}</span>
+            </div>
+
+            <div class="api-actions">
+              <button class="ghost" type="button" (click)="startEdit(account)">Edit</button>
+              <button class="danger" type="button" (click)="deleteAccount(account)">Delete</button>
+            </div>
+          </article>
+        </div>
       </section>
     </ng-container>
   </main>

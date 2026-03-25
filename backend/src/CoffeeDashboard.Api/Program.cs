@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IAuthService, DemoAuthService>();
+builder.Services.AddSingleton<ApiAccountStore>();
 builder.Services.AddHttpClient<IDashboardService, LiveDashboardService>(client =>
 {
     client.Timeout = TimeSpan.FromSeconds(8);
