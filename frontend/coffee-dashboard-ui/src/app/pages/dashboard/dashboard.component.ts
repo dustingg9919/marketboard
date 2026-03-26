@@ -142,7 +142,6 @@ export class DashboardComponent implements OnInit {
       LONDON_ROBUSTA: 'London Robusta',
       BTCUSDT: 'Bitcoin',
       GOLD: 'Giá vàng',
-      COFFEE_DOMESTIC: 'Cà phê nội địa',
       OIL: 'Giá dầu'
     };
 

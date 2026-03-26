@@ -106,7 +106,7 @@
           </div>
 
           <div class="mini-stats">
-            <div class="mini-stat" *ngFor="let card of cards.slice(3, 7)">
+            <div class="mini-stat" *ngFor="let card of cryptoCards">
               <span>{{ card.label }}</span>
               <strong>{{ formatValue(card.value, card) }}</strong>
               <small [ngClass]="getChangeClass(card)">{{ formatChange(card) }}</small>
@@ -115,7 +115,7 @@
         </article>
       </section>
 
-      <section class="commodity-grid" id="section-crypto">
+      <!--<section class="commodity-grid" id="section-crypto">
         <article class="market-tile" *ngFor="let card of cryptoCards">
           <div class="tile-top">
             <span>{{ card.label }}</span>
@@ -124,7 +124,7 @@
           <div class="tile-value pending-value">{{ formatValue(card.value, card) }}</div>
           <div class="tile-meta">{{ formatUnit(card) }} · {{ formatChange(card) }}</div>
         </article>
-      </section>
+      </section>-->
 
       <section class="bottom-grid" id="section-reports">
         <article class="panel status-panel">
