@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   readonly quickStats: MarketCard[] = [
     { code: 'OIL', label: 'Giá dầu', value: null, unit: '', changePercent: null },
     { code: 'GOLD', label: 'Giá vàng', value: null, unit: '', changePercent: null },
-    { code: 'SILVER', label: 'Giá bạc', value: null, unit: '', changePercent: null },
+    { code: 'COFFEE_DOMESTIC', label: 'Cà phê nội địa', value: null, unit: '', changePercent: null },
     { code: 'VNINDEX', label: 'VN-Index', value: null, unit: '', changePercent: null }
   ];
 
@@ -115,7 +115,7 @@ export class DashboardComponent implements OnInit {
 
   get heroCards(): MarketCard[] {
     const mergedCards = [...this.cards, ...this.quickStats];
-    const priority = ['GOLD', 'SILVER', 'OIL', 'USDVND', 'BTCUSDT'];
+    const priority = ['GOLD', 'COFFEE_DOMESTIC', 'OIL', 'USDVND', 'BTCUSDT'];
 
     return priority
       .map(code => mergedCards.find(card => card.code === code) ?? this.createPendingCard(code))
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get commodityCards(): MarketCard[] {
-    const excluded = new Set(['GOLD', 'SILVER', 'OIL', 'USDVND', 'BTCUSDT']);
+    const excluded = new Set(['GOLD', 'COFFEE_DOMESTIC', 'OIL', 'USDVND', 'BTCUSDT']);
     return [...this.cards.filter(card => !excluded.has(card.code)), ...this.quickStats.filter(card => !excluded.has(card.code))];
   }
 
@@ -142,7 +142,7 @@ export class DashboardComponent implements OnInit {
       LONDON_ROBUSTA: 'London Robusta',
       BTCUSDT: 'Bitcoin',
       GOLD: 'Giá vàng',
-      SILVER: 'Giá bạc',
+      COFFEE_DOMESTIC: 'Cà phê nội địa',
       OIL: 'Giá dầu'
     };
 
