@@ -10,9 +10,9 @@ namespace CoffeeDashboard.Api.Controllers;
 public class MarketDataController(DashboardDbContext dbContext) : ControllerBase
 {
     [HttpPost("coffee")]
-    public async Task<IActionResult> UpsertCoffeePrices([FromBody] CoffeePriceBatchRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpsertCoffeePrices([FromBody] List<CoffeePriceItem> items, CancellationToken cancellationToken)
     {
-        if (request.Items.Count == 0)
+        if (items.Count == 0)
         {
             return BadRequest(new { message = "No items" });
         }
@@ -31,7 +31,7 @@ public class MarketDataController(DashboardDbContext dbContext) : ControllerBase
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        foreach (var item in request.Items)
+        foreach (var item in items)
         {
             var date = DateOnly.Parse(item.Date);
             var snapshot = await dbContext.MarketSnapshots
@@ -55,9 +55,8 @@ public class MarketDataController(DashboardDbContext dbContext) : ControllerBase
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
-        return Ok(new { status = "ok", count = request.Items.Count });
+        return Ok(new { status = "ok", count = items.Count });
     }
 }
 
-public record CoffeePriceBatchRequest(List<CoffeePriceItem> Items);
 public record CoffeePriceItem(string Date, decimal Price, decimal Change);
