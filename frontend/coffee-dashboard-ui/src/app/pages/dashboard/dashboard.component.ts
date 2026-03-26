@@ -29,9 +29,8 @@ export class DashboardComponent implements OnInit {
 
   readonly menuItems = [
     { label: 'Dashboard', id: 'section-dashboard' },
-    { label: 'Markets', id: 'section-markets' },
-    { label: 'Crypto', id: 'section-crypto' },
     { label: 'News', id: 'section-news' },
+    { label: 'Markets', id: 'section-markets' },
     { label: 'Reports', id: 'section-reports' },
     { label: 'API', id: 'section-api' }
   ];
