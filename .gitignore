@@ -12,6 +12,9 @@
 /backend/**/obj
 /backend/**/publish
 
+# Specific path
+/backend/src/CoffeeDashboard.Api/obj
+
 # OS
 .DS_Store
 Thumbs.db
