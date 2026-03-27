@@ -25,4 +25,12 @@ export class AiHookComponent {
     'Copy JSON',
     'Save Template'
   ];
+
+  readonly jsonPreview = `{
+  "hook": "coffee-market",
+  "priority": "high",
+  "channels": ["dashboard", "telegram"],
+  "template": "Daily brief",
+  "schedule": "09:00 Asia/Bangkok"
+}`;
 }
