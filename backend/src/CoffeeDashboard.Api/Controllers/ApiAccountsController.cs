@@ -13,8 +13,7 @@ public class ApiAccountsController(DashboardDbContext dbContext) : ControllerBas
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var accounts = await dbContext.ApiAccounts
-            .OrderByDescending(x => x.IsCurrent)
-            .ThenBy(x => x.Name)
+            .OrderBy(x => x.Name)
             .ToListAsync(cancellationToken);
 
         return Ok(accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.IsCurrent)));
@@ -114,8 +113,7 @@ public class ApiAccountsController(DashboardDbContext dbContext) : ControllerBas
         }
 
         var accounts = await dbContext.ApiAccounts
-            .OrderByDescending(x => x.IsCurrent)
-            .ThenBy(x => x.Name)
+            .OrderBy(x => x.Name)
             .ToListAsync(cancellationToken);
 
         return Ok(accounts.Select(a => new ApiAccountDto(a.Name, a.Status, a.IsCurrent)));
