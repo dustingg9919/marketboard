@@ -104,6 +104,28 @@
   padding: 24px;
 }
 
+.tabbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tabbar a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #0f766e;
+  background: rgba(15, 118, 110, 0.08);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.tabbar a.active,
+.tabbar a:hover {
+  background: rgba(15, 118, 110, 0.2);
+  color: #0f172a;
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
