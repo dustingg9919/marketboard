@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ApiService } from '../../api.service';
+import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '../../api.types';
 
 @Component({
   selector: 'app-ai-hook',
