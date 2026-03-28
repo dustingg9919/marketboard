@@ -212,14 +212,29 @@
   gap: 16px;
 }
 
+.paywall-head {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .paywall-login {
-  justify-self: flex-end;
   background: #f59e0b;
   color: #111827;
   border: none;
   border-radius: 12px;
   padding: 8px 14px;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.paywall-close {
+  background: #1f2937;
+  color: #e5e7eb;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 600;
   cursor: pointer;
 }
 

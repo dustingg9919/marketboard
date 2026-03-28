@@ -80,7 +80,10 @@
 
   <div class="modal-backdrop" *ngIf="showPaywall">
     <div class="paywall" (click)="$event.stopPropagation()">
-      <button class="paywall-login" type="button" (click)="showLoginModal()">Đã có tài khoản</button>
+      <div class="paywall-head">
+        <button class="paywall-login" type="button" (click)="showLoginModal()">Đã có tài khoản</button>
+        <button class="paywall-close" type="button" (click)="closePaywall()">Đóng</button>
+      </div>
 
       <div class="paywall-grid">
         <div class="plan">

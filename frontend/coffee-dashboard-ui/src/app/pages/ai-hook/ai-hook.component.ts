@@ -66,6 +66,10 @@ export class AiHookComponent {
     this.showPaywall = false;
   }
 
+  closePaywall(): void {
+    this.showPaywall = false;
+  }
+
   async login(): Promise<void> {
     try {
       const account = await this.apiService.aiHookLogin(this.loginForm.username, this.loginForm.password);
