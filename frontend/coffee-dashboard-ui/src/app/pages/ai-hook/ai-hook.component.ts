@@ -9,7 +9,7 @@ import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '.
 @Component({
   selector: 'app-ai-hook',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './ai-hook.component.html',
   styleUrl: './ai-hook.component.scss'
 })
