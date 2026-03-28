@@ -92,6 +92,7 @@
             <li>Thực hiện các đoạn chat ngắn cho những câu hỏi thường gặp</li>
             <li>Tiết kiệm bộ nhớ và ngữ cảnh hạn chế</li>
           </ul>
+          <button class="pay-btn" type="button" (click)="openQr('trial')">Thanh toán</button>
         </div>
         <div class="plan highlight">
           <h3>Mở rộng</h3>
@@ -105,6 +106,7 @@
             <li>Ghi nhớ các mục tiêu và cuộc trò chuyện trước đây</li>
             <li>Lên kế hoạch đi lại và nhiệm vụ với chế độ tác nhân</li>
           </ul>
+          <button class="pay-btn" type="button" (click)="openQr('expand')">Thanh toán</button>
         </div>
         <div class="plan">
           <h3>Chuyên Nghiệp</h3>
@@ -116,6 +118,7 @@
             <li>Giải quyết các dự án lớn với tính năng đoạn chat cốt lõi không giới hạn</li>
             <li>Nhận quyền truy cập sớm vào các tính năng thử nghiệm</li>
           </ul>
+          <button class="pay-btn" type="button" (click)="openQr('pro')">Thanh toán</button>
         </div>
       </div>
     </div>
@@ -141,6 +144,14 @@
       <h3>Thông báo</h3>
       <p>{{ expiredMessage }}</p>
       <button class="modal-close" type="button" (click)="closeExpired()">Tôi đã biết</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showQr" (click)="closeQr()">
+    <div class="qr-modal" (click)="$event.stopPropagation()">
+      <h3>{{ qrTitle }}</h3>
+      <img [src]="qrImage" alt="QR thanh toán" />
+      <button class="modal-close" type="button" (click)="closeQr()">Tôi đã biết</button>
     </div>
   </div>
 </div>

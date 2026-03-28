@@ -17,7 +17,10 @@ export class AiHookComponent {
   showPaywall = false;
   showLogin = false;
   showExpired = false;
+  showQr = false;
   expiredMessage = 'Tài khoản của bạn đã hết hạn';
+  qrTitle = '';
+  qrImage = '';
 
   loginForm = {
     username: '',
@@ -108,5 +111,23 @@ export class AiHookComponent {
 
   closeExpired(): void {
     this.showExpired = false;
+  }
+
+  openQr(plan: 'trial' | 'expand' | 'pro'): void {
+    this.showQr = true;
+    if (plan === 'trial') {
+      this.qrTitle = 'Thanh toán · Dùng thử';
+      this.qrImage = '/assets/qr/trial.jpg';
+    } else if (plan === 'expand') {
+      this.qrTitle = 'Thanh toán · Mở rộng';
+      this.qrImage = '/assets/qr/expand.jpg';
+    } else {
+      this.qrTitle = 'Thanh toán · Chuyên Nghiệp';
+      this.qrImage = '/assets/qr/pro.jpg';
+    }
+  }
+
+  closeQr(): void {
+    this.showQr = false;
   }
 }

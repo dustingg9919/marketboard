@@ -263,11 +263,23 @@
   gap: 6px;
 }
 
+.pay-btn {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: none;
+  background: #f59e0b;
+  color: #111827;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .plan.highlight {
   border-color: #f59e0b;
 }
 
-.login-modal {
+.login-modal,
+.qr-modal {
   background: #111827;
   border-radius: 16px;
   border: 1px solid #374151;
@@ -277,7 +289,18 @@
   gap: 12px;
 }
 
-.login-modal h3 {
+.qr-modal {
+  width: min(420px, 90vw);
+}
+
+.qr-modal img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #1f2937;
+}
+
+.login-modal h3,
+.qr-modal h3 {
   margin: 0;
 }
 
