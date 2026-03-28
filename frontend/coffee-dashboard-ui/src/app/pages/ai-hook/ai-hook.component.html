@@ -65,10 +65,16 @@
       *ngFor="let item of actionButtons"
       [ngClass]="item.variant"
       type="button"
-      (click)="handleAction(); $event.stopPropagation()"
+      [disabled]="isLoading"
+      (click)="handleAction(item.label); $event.stopPropagation()"
     >
       {{ item.label }}
     </button>
+  </section>
+
+  <section class="result-panel" *ngIf="resultText || isLoading">
+    <div class="result-title">Kết quả</div>
+    <textarea readonly [value]="isLoading ? 'Đang xử lý...' : resultText"></textarea>
   </section>
 
   <div class="modal-backdrop" *ngIf="showApiGuide" (click)="closeApiGuide()">

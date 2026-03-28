@@ -21,6 +21,8 @@ export class AiHookComponent {
   expiredMessage = 'Tài khoản của bạn đã hết hạn';
   qrTitle = '';
   qrImage = '';
+  resultText = '';
+  isLoading = false;
 
   loginForm = {
     username: '',
@@ -92,9 +94,14 @@ export class AiHookComponent {
     }
   }
 
-  async handleAction(): Promise<void> {
+  async handleAction(actionLabel = ''): Promise<void> {
     if (!this.account) {
       this.showPaywall = true;
+      return;
+    }
+
+    if (!this.aiForm.apiKey.trim()) {
+      this.resultText = 'Vui lòng nhập Gemini API Key trước.';
       return;
     }
 
@@ -107,10 +114,53 @@ export class AiHookComponent {
       }
 
       await this.saveKey();
-      alert('Đã gửi prompt demo tới Gemini (mock).');
+      this.isLoading = true;
+      this.resultText = '';
+
+      const prompt = this.buildPrompt(actionLabel);
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(
+          this.aiForm.apiKey.trim()
+        )}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: prompt }]
+              }
+            ]
+          })
+        }
+      );
+
+      if (!response.ok) {
+        this.resultText = 'Gọi Gemini thất bại. Kiểm tra API Key hoặc quota.';
+        return;
+      }
+
+      const data = await response.json();
+      const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join('') ?? '';
+      this.resultText = text || 'Không có nội dung trả về.';
     } catch {
-      // ignore for demo
+      this.resultText = 'Có lỗi khi gọi Gemini.';
+    } finally {
+      this.isLoading = false;
     }
+  }
+
+  buildPrompt(actionLabel: string): string {
+    return `Bạn là trợ lý viết kịch bản/marketing.
+
+Yêu cầu: ${actionLabel || 'Tạo hook'}
+Tiêu đề chính: ${this.aiForm.idea}
+Tỷ lệ: ${this.aiForm.ratio}
+Ngôn ngữ voice: ${this.aiForm.voice}
+Giới tính voice: ${this.aiForm.gender}
+
+Hãy trả về nội dung rõ ràng, có cấu trúc, ngắn gọn và dễ triển khai.`;
   }
 
   closeExpired(): void {

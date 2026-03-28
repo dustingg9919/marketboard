@@ -191,6 +191,39 @@
   background: #fbbf24;
 }
 
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result-panel {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  color: #111827;
+  display: grid;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.result-title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.result-panel textarea {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111827;
+  background: #f9fafb;
+  resize: vertical;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
