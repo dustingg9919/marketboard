@@ -24,7 +24,12 @@
     <label class="field">
       <span class="field-label">
         Nhập Google Gemini API Key của bạn
-        <button type="button" class="inline-link" (click)="openApiGuide(); $event.stopPropagation()">nhấn vào đây để lấy api</button>
+        <button
+          *ngIf="account"
+          type="button"
+          class="inline-link"
+          (click)="openApiGuide(); $event.stopPropagation()"
+        >nhấn vào đây để lấy api</button>
       </span>
       <input type="password" [(ngModel)]="aiForm.apiKey" (blur)="saveKey()" placeholder="********************************" />
     </label>
