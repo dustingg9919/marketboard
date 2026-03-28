@@ -224,6 +224,20 @@
   resize: vertical;
 }
 
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 80;
+}
+
+.loading-overlay video {
+  width: 180px;
+  height: 180px;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;

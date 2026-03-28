@@ -168,4 +168,8 @@
       <button class="modal-close" type="button" (click)="closeQr()">Tôi đã biết</button>
     </div>
   </div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <video autoplay loop muted playsinline src="/assets/loading.mp4"></video>
+  </div>
 </div>

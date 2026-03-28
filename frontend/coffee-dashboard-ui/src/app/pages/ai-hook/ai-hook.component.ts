@@ -73,6 +73,7 @@ export class AiHookComponent {
   }
 
   async login(): Promise<void> {
+    this.isLoading = true;
     try {
       const account = await this.apiService.aiHookLogin(this.loginForm.username, this.loginForm.password);
       this.account = account as AiHookAccount;
@@ -81,6 +82,8 @@ export class AiHookComponent {
       this.showLogin = false;
     } catch {
       alert('Sai tài khoản hoặc mật khẩu');
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -105,6 +108,7 @@ export class AiHookComponent {
       return;
     }
 
+    this.isLoading = true;
     try {
       const result = await this.apiService.aiHookConsume(this.account.username);
       if (result.expired) {
@@ -114,7 +118,6 @@ export class AiHookComponent {
       }
 
       await this.saveKey();
-      this.isLoading = true;
       this.resultText = '';
 
       const prompt = this.buildPrompt(actionLabel);
