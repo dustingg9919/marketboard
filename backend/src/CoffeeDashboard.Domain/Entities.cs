@@ -86,3 +86,14 @@ public class AiHookAccount
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 }
+
+public class AiHookPaymentPlan
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string TypeName { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public int UsageLimit { get; set; }
+    public string? ApiLevel { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+}

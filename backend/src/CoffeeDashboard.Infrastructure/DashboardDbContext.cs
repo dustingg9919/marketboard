@@ -72,5 +72,43 @@ public class DashboardDbContext : DbContext
             BankName = null,
             CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
         });
+
+        modelBuilder.Entity<AiHookPaymentPlan>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.HasIndex(x => x.TypeName).IsUnique();
+            entity.Property(x => x.TypeName).HasMaxLength(50).IsRequired();
+            entity.Property(x => x.ApiLevel).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<AiHookPaymentPlan>().HasData(
+            new AiHookPaymentPlan
+            {
+                Id = Guid.Parse("b7ad1c12-21c3-4f6b-9bcb-57fbd7f6a2b9"),
+                TypeName = "Dùng thử",
+                Price = 5000,
+                UsageLimit = 100,
+                ApiLevel = null,
+                CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new AiHookPaymentPlan
+            {
+                Id = Guid.Parse("2c9cf75f-1a8f-4f3f-b2f6-0b37a5b1d020"),
+                TypeName = "Mở rộng",
+                Price = 80000,
+                UsageLimit = 400,
+                ApiLevel = null,
+                CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new AiHookPaymentPlan
+            {
+                Id = Guid.Parse("6b78a0c1-7c0d-4d0c-9e67-9c1d2e2ef1d1"),
+                TypeName = "Chuyên Nghiệp",
+                Price = 499000,
+                UsageLimit = 0,
+                ApiLevel = null,
+                CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
     }
 }
