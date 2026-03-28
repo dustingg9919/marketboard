@@ -14,27 +14,16 @@ import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '.
   styleUrl: './ai-hook.component.scss'
 })
 export class AiHookComponent {
-  readonly hookButtons = [
-    'Generate Prompt',
-    'Summarize News',
-    'Market Signal',
-    'Price Alert',
-    'Risk Snapshot',
-    'Weekly Brief'
+  readonly actionButtons = [
+    { label: 'TẠO HOOK', variant: 'primary' },
+    { label: 'KỊCH BẢN 60S', variant: 'secondary' },
+    { label: 'TỐI ƯU SEO', variant: 'info' },
+    { label: 'KỊCH BẢN LIVE', variant: 'danger' },
+    { label: 'PROMPT ẢNH & VIDEO', variant: 'purple' },
+    { label: 'VẼ ẢNH HOOK', variant: 'warning' }
   ];
 
-  readonly quickActions = [
-    'Create Hook',
-    'Test Payload',
-    'Copy JSON',
-    'Save Template'
-  ];
-
-  readonly jsonPreview = `{
-  "hook": "coffee-market",
-  "priority": "high",
-  "channels": ["dashboard", "telegram"],
-  "template": "Daily brief",
-  "schedule": "09:00 Asia/Bangkok"
-}`;
+  readonly ratioOptions = ['Dọc 9:16 (TikTok / Reels)', 'Ngang 16:9 (YouTube)', 'Vuông 1:1'];
+  readonly voiceOptions = ['Tiếng Việt', 'English', '日本語'];
+  readonly genderOptions = ['Nam (Male)', 'Nữ (Female)', 'Trung tính'];
 }
