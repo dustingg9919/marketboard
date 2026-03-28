@@ -14,6 +14,8 @@ import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '.
   styleUrl: './ai-hook.component.scss'
 })
 export class AiHookComponent {
+  showApiGuide = false;
+
   readonly actionButtons = [
     { label: 'TẠO HOOK', variant: 'primary' },
     { label: 'KỊCH BẢN 60S', variant: 'secondary' },
@@ -26,4 +28,12 @@ export class AiHookComponent {
   readonly ratioOptions = ['Dọc 9:16 (TikTok / Reels)', 'Ngang 16:9 (YouTube)', 'Vuông 1:1'];
   readonly voiceOptions = ['Tiếng Việt', 'English', '日本語'];
   readonly genderOptions = ['Nam (Male)', 'Nữ (Female)', 'Trung tính'];
+
+  openApiGuide(): void {
+    this.showApiGuide = true;
+  }
+
+  closeApiGuide(): void {
+    this.showApiGuide = false;
+  }
 }

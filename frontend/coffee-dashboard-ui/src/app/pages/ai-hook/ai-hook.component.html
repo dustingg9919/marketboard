@@ -22,7 +22,10 @@
 
   <section class="panel form-panel">
     <label class="field">
-      <span>Nhập Google Gemini API Key của bạn</span>
+      <span class="field-label">
+        Nhập Google Gemini API Key của bạn
+        <button type="button" class="inline-link" (click)="openApiGuide()">nhấn vào đây để lấy api</button>
+      </span>
       <input type="password" placeholder="********************************" />
     </label>
 
@@ -66,4 +69,11 @@
       {{ item.label }}
     </button>
   </section>
+
+  <div class="modal-backdrop" *ngIf="showApiGuide" (click)="closeApiGuide()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <img src="assets/gemini-api-guide.jpg" alt="Gemini API key guide" />
+      <button class="modal-close" type="button" (click)="closeApiGuide()">Tôi đã biết</button>
+    </div>
+  </div>
 </div>
