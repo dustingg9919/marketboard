@@ -77,9 +77,9 @@
     </button>
   </section>
 
-  <section class="result-panel" *ngIf="resultText || isLoading">
+  <section class="result-panel" *ngIf="resultHtml || isLoading">
     <div class="result-title">Kết quả</div>
-    <div class="result-body" [innerHTML]="isLoading ? 'Đang xử lý...' : resultText"></div>
+    <div class="result-body" [innerHTML]="isLoading ? '<div class=\'line\'>Đang xử lý...</div>' : resultHtml"></div>
   </section>
 
   <div class="modal-backdrop" *ngIf="showApiGuide" (click)="closeApiGuide()">

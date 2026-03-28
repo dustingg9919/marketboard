@@ -21,7 +21,7 @@ export class AiHookComponent {
   expiredMessage = 'Tài khoản của bạn đã hết hạn';
   qrTitle = '';
   qrImage = '';
-  resultText = '';
+  resultHtml = '';
   isLoading = false;
 
   loginForm = {
@@ -104,7 +104,7 @@ export class AiHookComponent {
     }
 
     if (!this.aiForm.apiKey.trim()) {
-      this.resultText = 'Vui lòng nhập Gemini API Key trước.';
+      this.resultHtml = this.wrapLine('Vui lòng nhập Gemini API Key trước.');
       return;
     }
 
@@ -118,7 +118,7 @@ export class AiHookComponent {
       }
 
       await this.saveKey();
-      this.resultText = '';
+      this.resultHtml = '';
 
       const prompt = this.buildPrompt(actionLabel);
       const response = await fetch(
@@ -140,15 +140,15 @@ export class AiHookComponent {
       );
 
       if (!response.ok) {
-        this.resultText = 'Gọi Gemini thất bại. Kiểm tra API Key hoặc quota.';
+        this.resultHtml = this.wrapLine('Gọi Gemini thất bại. Kiểm tra API Key hoặc quota.');
         return;
       }
 
       const data = await response.json();
       const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join('') ?? '';
-      this.resultText = this.formatResult(text || 'Không có nội dung trả về.');
+      this.resultHtml = this.formatResultHtml(text || 'Không có nội dung trả về.');
     } catch {
-      this.resultText = 'Có lỗi khi gọi Gemini.';
+      this.resultHtml = this.wrapLine('Có lỗi khi gọi Gemini.');
     } finally {
       this.isLoading = false;
     }
@@ -166,21 +166,34 @@ Giới tính voice: ${this.aiForm.gender}
 Hãy trả về nội dung rõ ràng, có cấu trúc, ngắn gọn và dễ triển khai.`;
   }
 
-  formatResult(raw: string): string {
-    const lines = raw.split('\n').map(line => line.trim());
+  formatResultHtml(raw: string): string {
+    const lines = raw.split('\n');
     const headings = ['Mở bài', 'Nội dung', 'Kết thúc', 'Hook', 'CTA', 'Ý tưởng', 'Gợi ý', 'Tiêu đề'];
 
     return lines
       .map(line => {
-        if (!line) return '';
-        const matched = headings.find(h => line.toLowerCase().startsWith(h.toLowerCase()));
+        const trimmed = line.trim();
+        if (!trimmed) return '<div class="line spacer"></div>';
+        const matched = headings.find(h => trimmed.toLowerCase().startsWith(h.toLowerCase()));
         if (matched) {
-          const rest = line.slice(matched.length).trim().replace(/^[:\-–]+\s*/, '');
-          return `## ${matched}\n${rest}`.trim();
+          const rest = trimmed.slice(matched.length).trim().replace(/^[:\-–]+\s*/, '');
+          return `<h2>${this.escapeHtml(matched)}</h2>${this.wrapLine(rest)}`;
         }
-        return line;
+        return this.wrapLine(trimmed);
       })
-      .join('\n');
+      .join('');
+  }
+
+  wrapLine(text: string): string {
+    if (!text) return '';
+    return `<div class="line">${this.escapeHtml(text)}</div>`;
+  }
+
+  escapeHtml(text: string): string {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   closeExpired(): void {
