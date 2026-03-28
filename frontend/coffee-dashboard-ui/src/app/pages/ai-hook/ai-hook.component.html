@@ -1,4 +1,4 @@
-<div class="ai-hook-page">
+<div class="ai-hook-page" (click)="!account && (showPaywall = true)">
   <header class="top-header">
     <div class="brand">
       <span class="logo">🚀</span>
@@ -24,21 +24,21 @@
     <label class="field">
       <span class="field-label">
         Nhập Google Gemini API Key của bạn
-        <button type="button" class="inline-link" (click)="openApiGuide()">nhấn vào đây để lấy api</button>
+        <button type="button" class="inline-link" (click)="openApiGuide(); $event.stopPropagation()">nhấn vào đây để lấy api</button>
       </span>
-      <input type="password" placeholder="********************************" />
+      <input type="password" [(ngModel)]="aiForm.apiKey" (blur)="saveKey()" placeholder="********************************" />
     </label>
 
     <div class="note">⚠️ Lưu ý: API nên phí cho phép bấm 15 lần/phút. Hãy thao tác từ từ nhé!</div>
 
     <label class="field">
       <span>Nhập ý tưởng (Tiêu đề chính)</span>
-      <input type="text" placeholder="kiem tien online" />
+      <input type="text" [(ngModel)]="aiForm.idea" placeholder="kiem tien online" />
     </label>
 
     <label class="field">
       <span>Chọn Tỷ lệ (Dùng cho Ảnh & Video)</span>
-      <select>
+      <select [(ngModel)]="aiForm.ratio">
         <option *ngFor="let option of ratioOptions">{{ option }}</option>
       </select>
     </label>
@@ -46,13 +46,13 @@
     <div class="field-grid">
       <label class="field">
         <span>Ngôn ngữ Voice (Cho Video/Live)</span>
-        <select>
+        <select [(ngModel)]="aiForm.voice">
           <option *ngFor="let option of voiceOptions">{{ option }}</option>
         </select>
       </label>
       <label class="field">
         <span>Giới tính Voice</span>
-        <select>
+        <select [(ngModel)]="aiForm.gender">
           <option *ngFor="let option of genderOptions">{{ option }}</option>
         </select>
       </label>
@@ -65,6 +65,7 @@
       *ngFor="let item of actionButtons"
       [ngClass]="item.variant"
       type="button"
+      (click)="handleAction(); $event.stopPropagation()"
     >
       {{ item.label }}
     </button>
@@ -74,6 +75,72 @@
     <div class="modal" (click)="$event.stopPropagation()">
       <img src="/assets/gemini-api-guide.jpg" alt="Gemini API key guide" />
       <button class="modal-close" type="button" (click)="closeApiGuide()">Tôi đã biết</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showPaywall">
+    <div class="paywall" (click)="$event.stopPropagation()">
+      <button class="paywall-login" type="button" (click)="showLoginModal()">Đã có tài khoản</button>
+
+      <div class="paywall-grid">
+        <div class="plan">
+          <h3>Dùng thử</h3>
+          <div class="price">5,000 vnd</div>
+          <ul>
+            <li>Nhận lời giải thích đơn giản</li>
+            <li>Giới hạn số lần sử dụng 20 lần / 1 tháng</li>
+            <li>Thực hiện các đoạn chat ngắn cho những câu hỏi thường gặp</li>
+            <li>Tiết kiệm bộ nhớ và ngữ cảnh hạn chế</li>
+          </ul>
+        </div>
+        <div class="plan highlight">
+          <h3>Mở rộng</h3>
+          <div class="price">
+            <span class="old">160.000 vnd</span>
+            80.000 vnd
+          </div>
+          <ul>
+            <li>Giải quyết các vấn đề phức tạp</li>
+            <li>Giới hạn số lần sử dụng 300 lần / 1 tháng</li>
+            <li>Ghi nhớ các mục tiêu và cuộc trò chuyện trước đây</li>
+            <li>Lên kế hoạch đi lại và nhiệm vụ với chế độ tác nhân</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <h3>Chuyên Nghiệp</h3>
+          <div class="price">522.500 vnd</div>
+          <ul>
+            <li>Gói dịch vụ AI thông minh nhất của Google</li>
+            <li>Không giới hạn số lần</li>
+            <li>Nắm vững các nhiệm vụ và chủ đề nâng cao</li>
+            <li>Giải quyết các dự án lớn với tính năng đoạn chat cốt lõi không giới hạn</li>
+            <li>Nhận quyền truy cập sớm vào các tính năng thử nghiệm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showLogin" (click)="showLogin = false">
+    <div class="login-modal" (click)="$event.stopPropagation()">
+      <h3>Đăng nhập</h3>
+      <label class="field">
+        <span>Username</span>
+        <input type="text" [(ngModel)]="loginForm.username" />
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input type="password" [(ngModel)]="loginForm.password" />
+      </label>
+      <button class="modal-close" type="button" (click)="login()">Đăng nhập</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showExpired" (click)="closeExpired()">
+    <div class="login-modal" (click)="$event.stopPropagation()">
+      <h3>Thông báo</h3>
+      <p>{{ expiredMessage }}</p>
+      <button class="modal-close" type="button" (click)="closeExpired()">Tôi đã biết</button>
     </div>
   </div>
 </div>

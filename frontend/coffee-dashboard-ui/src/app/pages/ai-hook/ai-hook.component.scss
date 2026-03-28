@@ -201,6 +201,86 @@
   padding: 20px;
 }
 
+.paywall {
+  background: #101010;
+  border: 1px solid #2a2a2a;
+  border-radius: 18px;
+  padding: 20px;
+  max-width: 920px;
+  width: 100%;
+  display: grid;
+  gap: 16px;
+}
+
+.paywall-login {
+  justify-self: flex-end;
+  background: #f59e0b;
+  color: #111827;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.paywall-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.plan {
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.plan h3 {
+  margin: 0;
+}
+
+.plan .price {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.plan .old {
+  text-decoration: line-through;
+  color: #9ca3af;
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+.plan ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #d1d5db;
+  font-size: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.plan.highlight {
+  border-color: #f59e0b;
+}
+
+.login-modal {
+  background: #111827;
+  border-radius: 16px;
+  border: 1px solid #374151;
+  padding: 18px;
+  width: min(360px, 90vw);
+  display: grid;
+  gap: 12px;
+}
+
+.login-modal h3 {
+  margin: 0;
+}
+
 .modal {
   background: #111827;
   border-radius: 16px;

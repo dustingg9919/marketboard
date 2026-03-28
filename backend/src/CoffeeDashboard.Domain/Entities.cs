@@ -71,3 +71,18 @@ public class ApiAccountRecord
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 }
+
+public class AiHookAccount
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string? ApiKey { get; set; }
+    public string PaymentType { get; set; } = string.Empty;
+    public DateTime ExpirationDate { get; set; }
+    public int ExpirationTimes { get; set; }
+    public string? BankAccount { get; set; }
+    public string? BankName { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+}

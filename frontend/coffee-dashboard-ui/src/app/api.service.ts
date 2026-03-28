@@ -97,4 +97,46 @@ export class ApiService {
 
     return response.json() as Promise<ApiAccount[]>;
   }
+
+  async aiHookLogin(username: string, password: string) {
+    const response = await fetch(`${this.baseUrl}/ai-hook/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
+
+    return response.json();
+  }
+
+  async aiHookSaveKey(username: string, apiKey: string | null) {
+    const response = await fetch(`${this.baseUrl}/ai-hook/save-key`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, apiKey })
+    });
+
+    if (!response.ok) {
+      throw new Error('Save key failed');
+    }
+
+    return response.json();
+  }
+
+  async aiHookConsume(username: string) {
+    const response = await fetch(`${this.baseUrl}/ai-hook/consume`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+
+    if (!response.ok) {
+      throw new Error('Consume failed');
+    }
+
+    return response.json();
+  }
 }

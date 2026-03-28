@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiService } from '../../api.service';
-import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '../../api.types';
+import { AiHookAccount } from '../../api.types';
 
 @Component({
   selector: 'app-ai-hook',
@@ -15,6 +14,25 @@ import { ApiAccount, DashboardSummaryResponse, MarketCard, NewsArticle } from '.
 })
 export class AiHookComponent {
   showApiGuide = false;
+  showPaywall = true;
+  showLogin = false;
+  showExpired = false;
+  expiredMessage = 'Tài khoản của bạn đã hết hạn';
+
+  loginForm = {
+    username: '',
+    password: ''
+  };
+
+  aiForm = {
+    apiKey: '',
+    idea: '',
+    ratio: 'Dọc 9:16 (TikTok / Reels)',
+    voice: 'Tiếng Việt',
+    gender: 'Nam (Male)'
+  };
+
+  account: AiHookAccount | null = null;
 
   readonly actionButtons = [
     { label: 'TẠO HOOK', variant: 'primary' },
@@ -29,6 +47,8 @@ export class AiHookComponent {
   readonly voiceOptions = ['Tiếng Việt', 'English', '日本語'];
   readonly genderOptions = ['Nam (Male)', 'Nữ (Female)', 'Trung tính'];
 
+  constructor(private readonly apiService: ApiService) {}
+
   openApiGuide(): void {
     this.showApiGuide = true;
   }
@@ -36,5 +56,57 @@ export class AiHookComponent {
   closeApiGuide(): void {
     this.showApiGuide = false;
     window.open('https://aistudio.google.com/api-keys', '_blank');
+  }
+
+  showLoginModal(): void {
+    this.showLogin = true;
+    this.showPaywall = false;
+  }
+
+  async login(): Promise<void> {
+    try {
+      const account = await this.apiService.aiHookLogin(this.loginForm.username, this.loginForm.password);
+      this.account = account as AiHookAccount;
+      this.aiForm.apiKey = account.apiKey ?? '';
+      this.showPaywall = false;
+      this.showLogin = false;
+    } catch {
+      alert('Sai tài khoản hoặc mật khẩu');
+    }
+  }
+
+  async saveKey(): Promise<void> {
+    if (!this.account) return;
+    try {
+      const account = await this.apiService.aiHookSaveKey(this.account.username, this.aiForm.apiKey || null);
+      this.account = account as AiHookAccount;
+    } catch {
+      // ignore for demo
+    }
+  }
+
+  async handleAction(): Promise<void> {
+    if (!this.account) {
+      this.showPaywall = true;
+      return;
+    }
+
+    try {
+      const result = await this.apiService.aiHookConsume(this.account.username);
+      if (result.expired) {
+        this.expiredMessage = result.message ?? 'Tài khoản của bạn đã hết hạn';
+        this.showExpired = true;
+        return;
+      }
+
+      await this.saveKey();
+      alert('Đã gửi prompt demo tới Gemini (mock).');
+    } catch {
+      // ignore for demo
+    }
+  }
+
+  closeExpired(): void {
+    this.showExpired = false;
   }
 }

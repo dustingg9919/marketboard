@@ -36,3 +36,13 @@ export interface ApiAccount {
   status: string;
   current: boolean;
 }
+
+export interface AiHookAccount {
+  username: string;
+  apiKey?: string | null;
+  paymentType: string;
+  expirationDate: string;
+  expirationTimes: number;
+  bankAccount?: string | null;
+  bankName?: string | null;
+}
