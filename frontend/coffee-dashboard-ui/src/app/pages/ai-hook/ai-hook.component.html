@@ -70,7 +70,7 @@
       *ngFor="let item of actionButtons"
       [ngClass]="item.variant"
       type="button"
-      [disabled]="isLoading"
+      [disabled]="isLoading || !aiForm.idea.trim()"
       (click)="handleAction(item.label); $event.stopPropagation()"
     >
       {{ item.label }}
