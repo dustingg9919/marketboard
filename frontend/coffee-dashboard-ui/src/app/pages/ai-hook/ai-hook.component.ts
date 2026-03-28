@@ -14,7 +14,7 @@ import { AiHookAccount } from '../../api.types';
 })
 export class AiHookComponent {
   showApiGuide = false;
-  showPaywall = true;
+  showPaywall = false;
   showLogin = false;
   showExpired = false;
   expiredMessage = 'Tài khoản của bạn đã hết hạn';
