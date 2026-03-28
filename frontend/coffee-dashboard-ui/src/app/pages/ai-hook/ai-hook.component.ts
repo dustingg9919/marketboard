@@ -167,18 +167,26 @@ Hãy trả về nội dung rõ ràng, có cấu trúc, ngắn gọn và dễ tri
   }
 
   formatResultHtml(raw: string): string {
-    const lines = raw.split('\n');
+    const sanitized = raw.replace(/<br\s*\/?\s*>/gi, '\n');
+    const lines = sanitized.split('\n');
     const headings = ['Mở bài', 'Nội dung', 'Kết thúc', 'Hook', 'CTA', 'Ý tưởng', 'Gợi ý', 'Tiêu đề'];
 
     return lines
       .map(line => {
         const trimmed = line.trim();
         if (!trimmed) return '<div class="line spacer"></div>';
+
+        const headingMatch = trimmed.match(/^#{2,3}\s*(.+)$/);
+        if (headingMatch) {
+          return `<h2>${this.escapeHtml(headingMatch[1])}</h2>`;
+        }
+
         const matched = headings.find(h => trimmed.toLowerCase().startsWith(h.toLowerCase()));
         if (matched) {
           const rest = trimmed.slice(matched.length).trim().replace(/^[:\-–]+\s*/, '');
           return `<h2>${this.escapeHtml(matched)}</h2>${this.wrapLine(rest)}`;
         }
+
         return this.wrapLine(trimmed);
       })
       .join('');
@@ -186,7 +194,13 @@ Hãy trả về nội dung rõ ràng, có cấu trúc, ngắn gọn và dễ tri
 
   wrapLine(text: string): string {
     if (!text) return '';
-    return `<div class="line">${this.escapeHtml(text)}</div>`;
+    return `<div class="line">${this.formatInline(text)}</div>`;
+  }
+
+  formatInline(text: string): string {
+    let escaped = this.escapeHtml(text);
+    escaped = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    return escaped;
   }
 
   escapeHtml(text: string): string {
