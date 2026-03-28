@@ -67,7 +67,7 @@ public class DashboardDbContext : DbContext
             ApiKey = null,
             PaymentType = "Dùng thử",
             ExpirationDate = new DateTime(2026, 12, 31, 0, 0, 0, DateTimeKind.Utc),
-            ExpirationTimes = 20,
+            ExpirationTimes = 100,
             BankAccount = null,
             BankName = null,
             CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
