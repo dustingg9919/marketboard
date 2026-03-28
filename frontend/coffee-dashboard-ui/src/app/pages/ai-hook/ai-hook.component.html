@@ -15,9 +15,9 @@
   </header>
 
   <section class="meta-row">
-    <div class="meta-item">User: <strong>{{ account?.username || 'Chưa đăng nhập' }}</strong></div>
-    <div class="meta-item">Lượt: <strong>{{ account?.expirationTimes ?? 0 }}</strong></div>
-    <div class="meta-item">Loại: <strong>{{ account?.paymentType || 'N/A' }}</strong></div>
+    <div class="meta-item">User: <strong>{{ account?.username || ' ' }}</strong></div>
+    <div class="meta-item">Lượt: <strong>{{ account?.expirationTimes ?? ' ' }}</strong></div>
+    <div class="meta-item">Loại: <strong>{{ account?.paymentType || ' ' }}</strong></div>
   </section>
 
   <section class="panel form-panel">
