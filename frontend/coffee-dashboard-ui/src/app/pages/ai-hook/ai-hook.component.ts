@@ -35,5 +35,6 @@ export class AiHookComponent {
 
   closeApiGuide(): void {
     this.showApiGuide = false;
+    window.open('https://aistudio.google.com/api-keys', '_blank');
   }
 }
