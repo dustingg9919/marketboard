@@ -146,7 +146,7 @@ export class AiHookComponent {
 
       const data = await response.json();
       const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join('') ?? '';
-      this.resultText = text || 'Không có nội dung trả về.';
+      this.resultText = this.formatResult(text || 'Không có nội dung trả về.');
     } catch {
       this.resultText = 'Có lỗi khi gọi Gemini.';
     } finally {
@@ -164,6 +164,23 @@ Ngôn ngữ voice: ${this.aiForm.voice}
 Giới tính voice: ${this.aiForm.gender}
 
 Hãy trả về nội dung rõ ràng, có cấu trúc, ngắn gọn và dễ triển khai.`;
+  }
+
+  formatResult(raw: string): string {
+    const lines = raw.split('\n').map(line => line.trim());
+    const headings = ['Mở bài', 'Nội dung', 'Kết thúc', 'Hook', 'CTA', 'Ý tưởng', 'Gợi ý', 'Tiêu đề'];
+
+    return lines
+      .map(line => {
+        if (!line) return '';
+        const matched = headings.find(h => line.toLowerCase().startsWith(h.toLowerCase()));
+        if (matched) {
+          const rest = line.slice(matched.length).trim().replace(/^[:\-–]+\s*/, '');
+          return `## ${matched}\n${rest}`.trim();
+        }
+        return line;
+      })
+      .join('\n');
   }
 
   closeExpired(): void {

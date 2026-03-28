@@ -79,7 +79,7 @@
 
   <section class="result-panel" *ngIf="resultText || isLoading">
     <div class="result-title">Kết quả</div>
-    <textarea readonly [value]="isLoading ? 'Đang xử lý...' : resultText"></textarea>
+    <div class="result-body" [innerHTML]="isLoading ? 'Đang xử lý...' : resultText"></div>
   </section>
 
   <div class="modal-backdrop" *ngIf="showApiGuide" (click)="closeApiGuide()">
