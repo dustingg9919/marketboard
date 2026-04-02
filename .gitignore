@@ -20,3 +20,6 @@
 Thumbs.db
 /.vs
 /backend/.vs/CoffeeDashboard/v18
+
+# Local scripts (may contain secrets)
+/scripts/
