@@ -37,6 +37,12 @@ export class AiHookComponent {
     gender: 'Nam (Male)'
   };
 
+  videoForm = {
+    prompt: ''
+  };
+
+  videoFile: File | null = null;
+
   account: AiHookAccount | null = null;
 
   readonly actionButtons = [
@@ -45,7 +51,8 @@ export class AiHookComponent {
     { label: 'TỐI ƯU SEO', variant: 'info' },
     { label: 'KỊCH BẢN LIVE', variant: 'danger' },
     { label: 'PROMPT ẢNH & VIDEO', variant: 'purple' },
-    { label: 'VẼ ẢNH HOOK', variant: 'warning' }
+    { label: 'VẼ ẢNH HOOK', variant: 'warning' },
+    { label: 'QUAY VIDEO MÔ TẢ SẢN PHẨM', variant: 'info' }
   ];
 
   readonly ratioOptions = ['Dọc 9:16 (TikTok / Reels)', 'Ngang 16:9 (YouTube)', 'Vuông 1:1'];
@@ -149,6 +156,54 @@ export class AiHookComponent {
       this.resultHtml = this.formatResultHtml(text || 'Không có nội dung trả về.');
     } catch {
       this.resultHtml = this.wrapLine('Có lỗi khi gọi Gemini.');
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  onVideoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      this.videoFile = null;
+      return;
+    }
+    this.videoFile = input.files[0];
+  }
+
+  async handleVideoDescribe(): Promise<void> {
+    if (!this.account) {
+      this.showPaywall = true;
+      return;
+    }
+
+    if (!this.aiForm.apiKey.trim()) {
+      this.resultHtml = this.wrapLine('Vui lòng nhập Gemini API Key trước.');
+      return;
+    }
+
+    if (!this.videoFile) {
+      this.resultHtml = this.wrapLine('Vui lòng chọn video sản phẩm (10-30s).');
+      return;
+    }
+
+    this.isLoading = true;
+    try {
+      await this.saveKey();
+      const result = await this.apiService.aiHookDescribeVideo(
+        this.account.username,
+        this.videoForm.prompt.trim() || null,
+        this.videoFile
+      );
+
+      if (result.expired) {
+        this.expiredMessage = result.message ?? 'Tài khoản của bạn đã hết hạn';
+        this.showExpired = true;
+        return;
+      }
+
+      this.resultHtml = this.formatResultHtml(result.text || 'Không có nội dung trả về.');
+    } catch {
+      this.resultHtml = this.wrapLine('Có lỗi khi gọi Gemini qua API hook.');
     } finally {
       this.isLoading = false;
     }

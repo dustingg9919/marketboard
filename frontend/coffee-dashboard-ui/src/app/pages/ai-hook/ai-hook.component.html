@@ -61,6 +61,25 @@
         </select>
       </label>
     </div>
+
+    <label class="field">
+      <span>Video sản phẩm (10-30s)</span>
+      <input type="file" accept="video/*" (change)="onVideoSelected($event)" />
+    </label>
+
+    <label class="field">
+      <span>Yêu cầu mô tả (tuỳ chọn)</span>
+      <textarea rows="3" [(ngModel)]="videoForm.prompt" placeholder="Ví dụ: mô tả chuẩn TMĐT, nhấn mạnh công dụng, chất liệu."></textarea>
+    </label>
+
+    <button
+      class="action-btn primary"
+      type="button"
+      [disabled]="isLoading || !videoFile"
+      (click)="handleVideoDescribe(); $event.stopPropagation()"
+    >
+      MÔ TẢ SẢN PHẨM TỪ VIDEO
+    </button>
   </section>
 
   <section class="action-grid">
@@ -69,8 +88,8 @@
       *ngFor="let item of actionButtons"
       [ngClass]="item.variant"
       type="button"
-      [disabled]="isLoading || !aiForm.idea.trim()"
-      (click)="handleAction(item.label); $event.stopPropagation()"
+      [disabled]="item.label === 'QUAY VIDEO MÔ TẢ SẢN PHẨM' ? (isLoading || !videoFile) : (isLoading || !aiForm.idea.trim())"
+      (click)="item.label === 'QUAY VIDEO MÔ TẢ SẢN PHẨM' ? handleVideoDescribe() : handleAction(item.label); $event.stopPropagation()"
     >
       {{ item.label }}
     </button>

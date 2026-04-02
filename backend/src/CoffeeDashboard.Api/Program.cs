@@ -29,6 +29,11 @@ builder.Services.AddHttpClient<LiveDashboardService>(client =>
     client.DefaultRequestHeaders.Accept.ParseAdd("application/json, application/xml, text/xml, */*");
 });
 
+builder.Services.AddHttpClient("Gemini", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(60);
+});
+
 builder.Services.AddScoped<IDashboardService, CachedDashboardService>();
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];

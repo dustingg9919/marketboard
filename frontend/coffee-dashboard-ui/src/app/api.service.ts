@@ -139,4 +139,24 @@ export class ApiService {
 
     return response.json();
   }
+
+  async aiHookDescribeVideo(username: string, prompt: string | null, videoFile: File) {
+    const formData = new FormData();
+    formData.append('username', username);
+    if (prompt) {
+      formData.append('prompt', prompt);
+    }
+    formData.append('video', videoFile);
+
+    const response = await fetch(`${this.baseUrl}/ai-hook/describe-video`, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error('Describe video failed');
+    }
+
+    return response.json();
+  }
 }
