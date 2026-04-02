@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
 using CoffeeDashboard.Domain.Entities;
@@ -106,10 +107,127 @@ public class AiHookController(DashboardDbContext dbContext, IHttpClientFactory h
             return StatusCode(StatusCodes.Status413PayloadTooLarge, new { message = "Video quá lớn (tối đa 50MB)." });
         }
 
-        await using var videoStream = request.Video.OpenReadStream();
-        await using var memoryStream = new MemoryStream();
-        await videoStream.CopyToAsync(memoryStream, cancellationToken);
-        var base64Video = Convert.ToBase64String(memoryStream.ToArray());
+        var tempInputPath = Path.Combine(Path.GetTempPath(), $"aihook-input-{Guid.NewGuid():N}.mp4");
+        var tempOutputPath = Path.Combine(Path.GetTempPath(), $"aihook-output-{Guid.NewGuid():N}.mp4");
+
+        try
+        {
+            await using (var fileStream = System.IO.File.Create(tempInputPath))
+            {
+                await request.Video.CopyToAsync(fileStream, cancellationToken);
+            }
+
+            var ffmpegArgs =
+                $"-y -i \"{tempInputPath}\" -vf scale=-2:480 -c:v libx264 -preset veryfast -crf 28 -c:a aac -b:a 96k \"{tempOutputPath}\"";
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                Arguments = ffmpegArgs,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(startInfo);
+            if (process == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Không thể chạy ffmpeg." });
+            }
+
+            await process.WaitForExitAsync(cancellationToken);
+            if (process.ExitCode != 0)
+            {
+                var error = await process.StandardError.ReadToEndAsync(cancellationToken);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ép video 480p thất bại.", details = error });
+            }
+
+            var outputBytes = await System.IO.File.ReadAllBytesAsync(tempOutputPath, cancellationToken);
+            var base64Video = Convert.ToBase64String(outputBytes);
+
+            var prompt = string.IsNullOrWhiteSpace(request.Prompt)
+                ? "Hãy mô tả sản phẩm trong video theo phong cách thương mại điện tử, ngắn gọn, rõ ràng, nêu điểm nổi bật, chất liệu, công dụng, và phù hợp để đăng bán."
+                : request.Prompt.Trim();
+
+            var payload = new
+            {
+                contents = new[]
+                {
+                    new
+                    {
+                        role = "user",
+                        parts = new object[]
+                        {
+                            new { text = prompt },
+                            new
+                            {
+                                inline_data = new
+                                {
+                                    mime_type = "video/mp4",
+                                    data = base64Video
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var httpClient = httpClientFactory.CreateClient("Gemini");
+            var url =
+                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={Uri.EscapeDataString(account.ApiKey)}";
+
+            using var response = await httpClient.PostAsJsonAsync(url, payload, cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
+                return StatusCode((int)response.StatusCode, new { message = "Gọi Gemini thất bại.", details = errorBody });
+            }
+
+            await using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            using var document = await JsonDocument.ParseAsync(responseStream, cancellationToken: cancellationToken);
+            var text = document.RootElement
+                .GetProperty("candidates")[0]
+                .GetProperty("content")
+                .GetProperty("parts")
+                .EnumerateArray()
+                .Select(part => part.TryGetProperty("text", out var partText) ? partText.GetString() : null)
+                .Where(partText => !string.IsNullOrWhiteSpace(partText))
+                .DefaultIfEmpty(string.Empty)
+                .Aggregate(string.Empty, (current, partText) => current + partText);
+
+            account.ExpirationTimes = Math.Max(0, account.ExpirationTimes - 1);
+            account.UpdatedAt = DateTime.UtcNow;
+            await dbContext.SaveChangesAsync(cancellationToken);
+
+            return Ok(new { expired = false, text = text ?? string.Empty });
+        }
+        finally
+        {
+            try
+            {
+                if (System.IO.File.Exists(tempInputPath))
+                {
+                    System.IO.File.Delete(tempInputPath);
+                }
+            }
+            catch
+            {
+                // ignore cleanup errors
+            }
+
+            try
+            {
+                if (System.IO.File.Exists(tempOutputPath))
+                {
+                    System.IO.File.Delete(tempOutputPath);
+                }
+            }
+            catch
+            {
+                // ignore cleanup errors
+            }
+        }
 
         var prompt = string.IsNullOrWhiteSpace(request.Prompt)
             ? "Hãy mô tả sản phẩm trong video theo phong cách thương mại điện tử, ngắn gọn, rõ ràng, nêu điểm nổi bật, chất liệu, công dụng, và phù hợp để đăng bán."
