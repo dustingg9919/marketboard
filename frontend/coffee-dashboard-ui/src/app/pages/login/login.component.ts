@@ -27,16 +27,15 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    // NOTE: Auto-login bằng admin/admin để bỏ qua trang login.
-    // Nếu đổi password, auto-login sẽ fail và user ở lại trang login.
-    if (!this.username && !this.password) {
-      this.username = 'admin';
-      this.password = 'admin';
-      await this.login();
-      // Uncomment để rollback về login thủ công.
-      // this.username = '';
-      // this.password = '';
-    }
+    // NOTE: BỎ QUA auto-login để landing vào resume tĩnh.
+    // Nếu cần phục hồi auto-login admin/admin thì uncomment block dưới.
+    // if (!this.username && !this.password) {
+    //   this.username = 'admin';
+    //   this.password = 'admin';
+    //   await this.login();
+    //   this.username = '';
+    //   this.password = '';
+    // }
   }
 
   async login(): Promise<void> {
