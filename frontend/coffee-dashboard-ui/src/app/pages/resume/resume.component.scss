@@ -353,6 +353,15 @@
   z-index: 2;
 }
 
+.timeline-item.tilsoft::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  background: url('/assets/tilsoft-logo.jpg') center/contain no-repeat;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .timeline-item .dot {
   position: absolute;
   left: -3px;
