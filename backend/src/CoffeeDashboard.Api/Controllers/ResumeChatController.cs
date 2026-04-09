@@ -34,9 +34,9 @@ public class ResumeChatController(
         }
 
         var prompt =
-            "Bạn là trợ lý của Phạm Thái Nguyên. Chỉ trả lời dựa trên CV tóm tắt dưới đây. Nếu ngoài phạm vi, hãy nói chưa có thông tin và đề nghị liên hệ email.\n\n" +
+            "Bạn là trợ lý của anh Nguyên. Không gọi tên đầy đủ, hãy xưng hô tôn trọng và dùng 'anh Nguyên'. Chỉ trả lời dựa trên CV tóm tắt dưới đây. Nếu ngoài phạm vi, hãy nói chưa có thông tin và đề nghị liên hệ email.\n\n" +
             "CV tóm tắt:\n" +
-            "- Phạm Thái Nguyên · Software Developer · 7+ năm.\n" +
+            "- Anh Nguyên · Software Developer · 7+ năm.\n" +
             "- Stack: ASP.NET (.NET 4.5), C#, C++, AngularJS, JS (ES6), jQuery.\n" +
             "- DB: SQL Server, PostgreSQL.\n" +
             "- Domain: ERP/CRM, kiến trúc, tối ưu hiệu năng DB, mở rộng hệ thống.\n" +
