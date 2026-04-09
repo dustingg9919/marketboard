@@ -181,37 +181,6 @@ namespace CoffeeDashboard.Infrastructure.Migrations
                     b.ToTable("ApiAccounts");
                 });
 
-            modelBuilder.Entity("CoffeeDashboard.Domain.Entities.ResumeInfo", b =>
-                {
-                    b.Property<string>("ObjectKey")
-                        .HasColumnName("Object")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.HasKey("ObjectKey");
-
-                    b.ToTable("ResumeInfo");
-
-                    b.HasData(
-                        new
-                        {
-                            ObjectKey = "gemini_api_key",
-                            CreatedAt = new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Value = "AIzaSyC45ufgYsXLFZG-pTvena8BVPemQXwOLj0"
-                        });
-                });
-
             modelBuilder.Entity("CoffeeDashboard.Domain.Entities.MarketAsset", b =>
                 {
                     b.Property<Guid>("Id")

@@ -97,11 +97,3 @@ public class AiHookPaymentPlan
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 }
-
-public class ResumeInfo
-{
-    public string ObjectKey { get; set; } = string.Empty;
-    public string Value { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; set; }
-}

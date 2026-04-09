@@ -74,20 +74,6 @@ public class DashboardDbContext : DbContext
             CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
         });
 
-        modelBuilder.Entity<ResumeInfo>(entity =>
-        {
-            entity.HasKey(x => x.ObjectKey);
-            entity.Property(x => x.ObjectKey).HasColumnName("Object").HasMaxLength(200).IsRequired();
-            entity.Property(x => x.Value).HasMaxLength(2000).IsRequired();
-        });
-
-        modelBuilder.Entity<ResumeInfo>().HasData(new ResumeInfo
-        {
-            ObjectKey = "gemini_api_key",
-            Value = "AIzaSyC45ufgYsXLFZG-pTvena8BVPemQXwOLj0",
-            CreatedAt = new DateTime(2026, 4, 9, 0, 0, 0, DateTimeKind.Utc)
-        });
-
         modelBuilder.Entity<AiHookPaymentPlan>(entity =>
         {
             entity.HasKey(x => x.Id);
@@ -113,6 +99,21 @@ public class DashboardDbContext : DbContext
                 Price = 80000,
                 UsageLimit = 400,
                 ApiLevel = null,
+                CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new AiHookPaymentPlan
+            {
+                Id = Guid.Parse("6b78a0c1-7c0d-4d0c-9e67-9c1d2e2ef1d1"),
+                TypeName = "Chuyên Nghiệp",
+                Price = 499000,
+                UsageLimit = 0,
+                ApiLevel = null,
+                CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+    }
+}
+         ApiLevel = null,
                 CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
             },
             new AiHookPaymentPlan
