@@ -76,6 +76,7 @@ public class DashboardDbContext : DbContext
 
         modelBuilder.Entity<ResumeInfo>(entity =>
         {
+            entity.ToTable("ResumeInfo");
             entity.HasKey(x => x.ObjectKey);
             entity.Property(x => x.ObjectKey).HasColumnName("Object").HasMaxLength(200).IsRequired();
             entity.Property(x => x.Value).HasMaxLength(2000).IsRequired();
