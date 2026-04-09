@@ -23,7 +23,7 @@ export class ResumeComponent {
   messages: ChatMessage[] = [
     {
       role: 'assistant',
-      text: 'Xin chào! Tôi là trợ lý của Phạm Thái Nguyên. Bạn muốn hỏi gì về kỹ năng hoặc dự án?'
+      text: 'Chào bạn! Mình là trợ lý của anh Nguyên 👋 Bạn muốn tìm hiểu kỹ năng, dự án hay kinh nghiệm nào?'
     }
   ];
 
