@@ -99,6 +99,21 @@
   color: #64748b;
 }
 
+.block {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.block:hover {
+  transform: scale(1.5);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  z-index: 3;
+}
+
 .block h2 {
   font-size: 13px;
   font-weight: 700;
@@ -181,6 +196,17 @@
 .timeline-item {
   position: relative;
   padding-left: 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 14px 14px 32px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-item:hover {
+  transform: scale(1.5);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  z-index: 2;
 }
 
 .timeline-item .dot {
