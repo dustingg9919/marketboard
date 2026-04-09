@@ -236,6 +236,15 @@
   font-size: 12px;
   color: #475569;
   margin-bottom: 4px;
+  position: relative;
+  padding-left: 14px;
+}
+
+.inline-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #5d8acb;
 }
 
 @media (max-width: 900px) {
