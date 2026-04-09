@@ -6,6 +6,38 @@
   </nav>
 
   <div class="resume-layout">
+    <button class="chat-toggle" type="button" (click)="toggleChat()">
+      <img src="/assets/resume-bot-avatar.jpg" alt="Assistant" />
+    </button>
+
+    <div class="chat-widget" [class.open]="isChatOpen">
+      <div class="chat-header">
+        <div class="chat-title">
+          <img src="/assets/resume-bot-avatar.jpg" alt="Assistant" />
+          <div>
+            <strong>Trợ lý của Nguyên</strong>
+            <span>Online</span>
+          </div>
+        </div>
+        <button type="button" class="chat-close" (click)="toggleChat()">✕</button>
+      </div>
+
+      <div class="chat-body">
+        <div class="chat-msg" *ngFor="let msg of messages" [class.user]="msg.role === 'user'">
+          <span>{{ msg.text }}</span>
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input
+          type="text"
+          [(ngModel)]="chatInput"
+          placeholder="đặt câu hỏi cho trợ lý của tôi ...."
+          (keydown.enter)="sendMessage()"
+        />
+        <button type="button" [disabled]="isSending" (click)="sendMessage()">Send</button>
+      </div>
+    </div>
     <aside class="left-panel">
       <div class="profile">
         <div class="avatar">

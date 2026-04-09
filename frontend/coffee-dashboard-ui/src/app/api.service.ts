@@ -159,4 +159,18 @@ export class ApiService {
 
     return response.json();
   }
+
+  async resumeChat(message: string, history: { role: string; text: string }[]) {
+    const response = await fetch(`${this.baseUrl}/resume-chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, history })
+    });
+
+    if (!response.ok) {
+      throw new Error('Resume chat failed');
+    }
+
+    return response.json();
+  }
 }
