@@ -100,8 +100,6 @@
 }
 
 .block {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 14px;
   position: relative;
@@ -109,7 +107,7 @@
 }
 
 .block:hover {
-  transform: scale(1.5);
+  transform: scale(1.05);
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
   z-index: 3;
 }
@@ -196,15 +194,13 @@
 .timeline-item {
   position: relative;
   padding-left: 18px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
   padding: 14px 14px 14px 32px;
+  border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .timeline-item:hover {
-  transform: scale(1.5);
+  transform: scale(1.05);
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
   z-index: 2;
 }
