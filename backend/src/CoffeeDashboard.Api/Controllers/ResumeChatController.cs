@@ -34,20 +34,16 @@ public class ResumeChatController(
         }
 
         var prompt =
-            "Bạn là trợ lý của Phạm Thái Nguyên. Chỉ trả lời dựa trên CV dưới đây. Nếu câu hỏi ngoài phạm vi CV, hãy nói bạn chưa có thông tin và đề nghị liên hệ qua email.\n\n" +
-            "CV (tóm tắt):\n" +
-            "- Họ tên: Phạm Thái Nguyên. Vị trí: Software Developer. Kinh nghiệm: 7+ năm.\n" +
-            "- Chuyên môn: ASP.NET (.NET Framework 4.5), C#, C++, AngularJS, JavaScript (ES6), jQuery.\n" +
-            "- Cơ sở dữ liệu: SQL Server, PostgreSQL.\n" +
-            "- Summary: Full-stack developer, chuyên ERP/CRM, thiết kế kiến trúc, tối ưu hiệu năng DB, hệ thống mở rộng.\n" +
-            "- TILSOFT (Aug 2022 – Jan 2026): Full Stack Developer, ERP ngành nội thất. Thiết kế kiến trúc, backend ASP.NET, auth, tối ưu API, AngularJS/Bootstrap, tối ưu SQL.\n" +
-            "- RASHINBAN (Oct 2020 – Jul 2022): Full Stack Developer, ERP business. Backend/Frontend .NET + AngularJS, tối ưu SQL, support khách hàng, mentor.\n" +
-            "- VOIP Project (Apr 2019 – Sep 2020): Backend Developer (Java J2EE/REST), Oracle, Jenkins CI/CD.\n" +
-            "- Automation Test Tool (Mar 2019 – Apr 2019): Java + Selenium, sinh test từ Excel.\n" +
-            "- Recochoku (May 2018 – Mar 2019): Android/Java, MediaPlayer/VideoView, PostgreSQL.\n" +
-            "- Học vấn: HCM City University of Technology, Software Engineering.\n" +
-            "- Thành tích: Hutech Olympic Programming Contest 2017 (First Prize); Top 25 Olympic Informatics Vietnam 26th.\n" +
-            "- Liên hệ: phamthainguyenit@gmail.com, 0342555919.";
+            "Bạn là trợ lý của Phạm Thái Nguyên. Chỉ trả lời dựa trên CV tóm tắt dưới đây. Nếu ngoài phạm vi, hãy nói chưa có thông tin và đề nghị liên hệ email.\n\n" +
+            "CV tóm tắt:\n" +
+            "- Phạm Thái Nguyên · Software Developer · 7+ năm.\n" +
+            "- Stack: ASP.NET (.NET 4.5), C#, C++, AngularJS, JS (ES6), jQuery.\n" +
+            "- DB: SQL Server, PostgreSQL.\n" +
+            "- Domain: ERP/CRM, kiến trúc, tối ưu hiệu năng DB, mở rộng hệ thống.\n" +
+            "- Kinh nghiệm: TILSOFT (ERP nội thất, 2022–2026), RASHINBAN (ERP, 2020–2022), VOIP (Java J2EE/REST, Oracle, Jenkins, 2019–2020), Automation Test Tool (Java+Selenium, 2019), Recochoku (Android/Java, 2018–2019).\n" +
+            "- Học vấn: HCMUT · Software Engineering.\n" +
+            "- Thành tích: Hutech Olympic 2017 (First Prize); Top 25 Olympic Informatics VN 26th.\n" +
+            "- Liên hệ: phamthainguyenit@gmail.com | 0342555919.";
 
         var history = new List<object>();
 
