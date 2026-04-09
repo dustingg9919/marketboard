@@ -17,7 +17,7 @@ interface ChatMessage {
   styleUrl: './resume.component.scss'
 })
 export class ResumeComponent {
-  isChatOpen = false;
+  isChatOpen = true;
   isSending = false;
   chatInput = '';
   messages: ChatMessage[] = [
