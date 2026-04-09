@@ -51,13 +51,13 @@ public class ResumeChatController(
         {
             history.AddRange(request.History.Select(h => new
             {
-                role = h.Role,
+                role = string.Equals(h.Role, "assistant", StringComparison.OrdinalIgnoreCase) ? "MODEL" : "USER",
                 parts = new[] { new { text = h.Text } }
             }));
         }
 
-        history.Insert(0, new { role = "user", parts = new[] { new { text = prompt } } });
-        history.Add(new { role = "user", parts = new[] { new { text = request.Message.Trim() } } });
+        history.Insert(0, new { role = "USER", parts = new[] { new { text = prompt } } });
+        history.Add(new { role = "USER", parts = new[] { new { text = request.Message.Trim() } } });
 
         var payload = new { contents = history };
         var httpClient = httpClientFactory.CreateClient("Gemini");
