@@ -76,11 +76,8 @@
   height: 120px;
   border-radius: 999px;
   background: #ffffff;
-  display: grid;
-  place-items: center;
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2937;
+  display: block;
+  object-fit: cover;
 }
 
 .profile h1 {
