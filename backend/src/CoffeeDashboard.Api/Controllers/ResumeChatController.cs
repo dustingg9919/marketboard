@@ -2,12 +2,16 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using CoffeeDashboard.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeDashboard.Api.Controllers;
 
 [ApiController]
 [Route("api/resume-chat")]
-public class ResumeChatController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : ControllerBase
+public class ResumeChatController(
+    IHttpClientFactory httpClientFactory,
+    IConfiguration configuration,
+    DashboardDbContext dbContext) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Chat([FromBody] ResumeChatRequest request, CancellationToken cancellationToken)
@@ -17,7 +21,13 @@ public class ResumeChatController(IHttpClientFactory httpClientFactory, IConfigu
             return BadRequest(new { message = "Message is required" });
         }
 
-        var apiKey = configuration["Gemini:ApiKey"] ?? Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+        var apiKey = await dbContext.ResumeInfos
+            .Where(x => x.ObjectKey == "gemini_api_key")
+            .Select(x => x.Value)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        apiKey ??= configuration["Gemini:ApiKey"] ?? Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Missing Gemini API key" });
@@ -25,11 +35,16 @@ public class ResumeChatController(IHttpClientFactory httpClientFactory, IConfigu
 
         var prompt = "Bạn là trợ lý của Phạm Thái Nguyên. Trả lời ngắn gọn, lịch sự, và tập trung vào kinh nghiệm, kỹ năng, và dự án trong CV. Nếu câu hỏi ngoài phạm vi, hãy trả lời ngắn gọn và đề nghị liên hệ qua email.";
 
-        var history = request.History?.Select(h => new
+        var history = new List<object>();
+
+        if (request.History != null)
         {
-            role = h.Role,
-            parts = new[] { new { text = h.Text } }
-        }).ToList() ?? new List<object>();
+            history.AddRange(request.History.Select(h => new
+            {
+                role = h.Role,
+                parts = new[] { new { text = h.Text } }
+            }));
+        }
 
         history.Insert(0, new { role = "user", parts = new[] { new { text = prompt } } });
         history.Add(new { role = "user", parts = new[] { new { text = request.Message.Trim() } } });

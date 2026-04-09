@@ -13,6 +13,7 @@ public class DashboardDbContext : DbContext
     public DbSet<MarketSnapshot> MarketSnapshots => Set<MarketSnapshot>();
     public DbSet<ApiAccountRecord> ApiAccounts => Set<ApiAccountRecord>();
     public DbSet<AiHookAccount> AiHookAccounts => Set<AiHookAccount>();
+    public DbSet<ResumeInfo> ResumeInfos => Set<ResumeInfo>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,6 +72,20 @@ public class DashboardDbContext : DbContext
             BankAccount = null,
             BankName = null,
             CreatedAt = new DateTime(2026, 3, 28, 0, 0, 0, DateTimeKind.Utc)
+        });
+
+        modelBuilder.Entity<ResumeInfo>(entity =>
+        {
+            entity.HasKey(x => x.ObjectKey);
+            entity.Property(x => x.ObjectKey).HasColumnName("Object").HasMaxLength(200).IsRequired();
+            entity.Property(x => x.Value).HasMaxLength(2000).IsRequired();
+        });
+
+        modelBuilder.Entity<ResumeInfo>().HasData(new ResumeInfo
+        {
+            ObjectKey = "gemini_api_key",
+            Value = "AIzaSyC45ufgYsXLFZG-pTvena8BVPemQXwOLj0",
+            CreatedAt = new DateTime(2026, 4, 9, 0, 0, 0, DateTimeKind.Utc)
         });
 
         modelBuilder.Entity<AiHookPaymentPlan>(entity =>
