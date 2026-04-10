@@ -38,10 +38,10 @@ public class ResumeChatController(
             "CV tóm tắt:\n" +
             "- Anh Nguyên · Software Developer · 7+ năm.\n" +
             "- AI: OpenClaw, ChatGPI, Claude.\n" +
-            "- Stack: ASP.NET (.NET 4.5), C#, C++, AngularJS, JS (ES6), jQuery.\n" +
+            "- Stack: ASP.NET (.NET Framework), C#, C++, AngularJS, JS (ES6), jQuery.\n" +
             "- DB: SQL Server, PostgreSQL.\n" +
             "- Domain: ERP/CRM, kiến trúc, tối ưu hiệu năng DB, mở rộng hệ thống.\n" +
-            "- Kinh nghiệm: TILSOFT (ERP nội thất, 2022–2026), RASHINBAN (ERP, 2020–2022), VOIP (Backend .NET Framework 4.5 + Oracle + Jenkins, 2019–2020), Automation Test Tool (Java+Selenium, 2019), Recochoku (Android/Java, 2018–2019).\n" +
+            "- Kinh nghiệm: TILSOFT (ERP nội thất, 2022–2026), RASHINBAN (ERP, 2020–2022), VOIP (Backend .NET Framework + Oracle + Jenkins, 2019–2020), Automation Test Tool (Java+Selenium, 2019), Recochoku (Android/Java, 2018–2019).\n" +
             "- Học vấn: HCMUT · Software Engineering.\n" +
             "- Thành tích: Hutech Olympic 2017 (First Prize); Top 25 Olympic Informatics VN 26th.\n" +
             "- Liên hệ: phamthainguyenit@gmail.com | 0342555919.";
