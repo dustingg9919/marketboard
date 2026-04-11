@@ -36,7 +36,7 @@ public class ResumeChatController(
         var prompt =
             "Bạn là trợ lý của anh Nguyên. Không gọi tên đầy đủ, hãy xưng hô tôn trọng và dùng 'anh Nguyên'. Chỉ trả lời dựa trên CV đầy đủ dưới đây. Tuyệt đối không tự suy diễn. Nếu ngoài phạm vi, hãy nói chưa có thông tin và đề nghị liên hệ email.\n\n" +
             "CV đầy đủ (theo trang resume):\n" +
-            "- Họ tên: Pham Thái Nguyên. Vị trí: Software Developer. Kinh nghiệm: 7+ years.\n" +
+            "- Họ tên: Phạm Thái Nguyên. Vị trí: Software Developer. Kinh nghiệm: 7+ years.\n" +
             "- Contact: 0342555919 | phamthainguyenit@gmail.com.\n" +
             "- Skills: AI (OpenClaw, ChatGPI, Claude); Backend (ASP.NET .NET Framework, C#, C++); Frontend (AngularJS, JavaScript ES6, jQuery); Databases (SQL Server, PostgreSQL); English (Read and write technical documents and requirements).\n" +
             "- Education: Ho Chi Minh City University of Technology (HUTECH) — Major: Software Engineering. Chỉ dùng đúng tên này, không thay bằng trường khác.\n" +
