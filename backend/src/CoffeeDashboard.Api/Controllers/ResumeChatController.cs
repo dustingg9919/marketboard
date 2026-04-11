@@ -39,7 +39,7 @@ public class ResumeChatController(
             "- Họ tên: Pham Thái Nguyên. Vị trí: Software Developer. Kinh nghiệm: 7+ years.\n" +
             "- Contact: 0342555919 | phamthainguyenit@gmail.com.\n" +
             "- Skills: AI (OpenClaw, ChatGPI, Claude); Backend (ASP.NET .NET Framework, C#, C++); Frontend (AngularJS, JavaScript ES6, jQuery); Databases (SQL Server, PostgreSQL); English (Read and write technical documents and requirements).\n" +
-            "- Education: Ho Chi Minh City University of Technology — Major: Software Engineering.\n" +
+            "- Education: Ho Chi Minh City University of Technology (HUTECH) — Major: Software Engineering.\n" +
             "- Achievement: First Prize of Hutech Olympic Programming Contest 2017; Top 25 Olympic Informatics students Vietnam 26th.\n" +
             "- Personal Interests: Game, Badminton, Hiking.\n" +
             "- Highlights: Full-stack developer with 7+ years building enterprise web; specialized in ASP.NET (.NET Framework) backend and AngularJS frontend; strong ERP/CRM experience; scalable architecture, DB performance optimization; system scalability & clean architecture.\n" +
