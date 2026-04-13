@@ -26,6 +26,12 @@
         <div class="chat-msg" *ngFor="let msg of messages" [class.user]="msg.role === 'user'">
           <span>{{ msg.text }}</span>
         </div>
+        <div class="chat-msg typing" *ngIf="isSending">
+          <span>đang suy nghĩ</span>
+          <span class="dots">
+            <span>.</span><span>.</span><span>.</span>
+          </span>
+        </div>
       </div>
 
       <div class="chat-input">
