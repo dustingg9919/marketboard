@@ -38,25 +38,25 @@ public class ResumeChatController(
             "CV đầy đủ (theo trang resume):\n" +
             "- Họ tên: Phạm Thái Nguyên. Vị trí: Software Developer. Kinh nghiệm: 7+ years.\n" +
             "- Contact: 0342555919 | phamthainguyenit@gmail.com.\n" +
-            "- Skills: AI (OpenClaw, ChatGPI, Claude); Backend (ASP.NET .NET Framework, C#, C++); Frontend (AngularJS, JavaScript ES6, jQuery); Databases (SQL Server, PostgreSQL); English (Read and write technical documents and requirements).\n" +
+            "- Skills: AI (Copilot, OpenClaw, ChatGPI, Claude); Backend (ASP.NET, .NET Core, C#, C++); Frontend (AngularJS, JavaScript ES6, jQuery); Databases (SQL Server, PostgreSQL); English (Read and write technical documents and requirements).\n" +
             "- Education: Ho Chi Minh City University of Technology (HUTECH) — Major: Software Engineering. Chỉ dùng đúng tên này, không thay bằng trường khác.\n" +
             "- Achievement: First Prize of Hutech Olympic Programming Contest 2017; Top 25 Olympic Informatics students Vietnam 26th.\n" +
             "- Personal Interests: Game, Badminton, Hiking.\n" +
-            "- Highlights: Full-stack developer with 7+ years building enterprise web; specialized in ASP.NET (.NET Framework) backend and AngularJS frontend; strong ERP/CRM experience; scalable architecture, DB performance optimization; system scalability & clean architecture.\n" +
+            "- Highlights: Full-stack developer with 7+ years building enterprise web; specialized in ASP.NET, .NET Core and AngularJS; strong ERP/CRM experience; 2+ years experience with AI tools; scalable architecture, DB performance optimization; system scalability & clean architecture.\n" +
             "- Experience:\n" +
             "  * TILSOFT (AUG 2022 – JAN 2026) — FULL STACK DEVELOPER. Furniture Industry ERP Platform.\n" +
-            "    Responsibilities: Designed ERP module architecture; backend ASP.NET services; auth/authorization; API performance; AngularJS + Bootstrap SPA; managed & optimized SQL Server; improved query performance; collaborated cross-functional.\n" +
-            "    Technologies: Backend ASP.NET; Frontend AngularJS, Bootstrap; Database SQL Server.\n" +
+            "    Responsibilities: Designed and implemented ERP module architecture; developed backend services using .NET Core with modular monolith architecture; auth/authorization; API performance; AngularJS + Bootstrap SPA; managed & optimized SQL Server; improved query performance; collaborated cross-functional.\n" +
+            "    Technologies: Backend .NET Core; Frontend AngularJS, Bootstrap; Database SQL Server; Devops CI/CD pipeline.\n" +
             "  * RASHINBAN (OCT 2020 – JUL 2022) — FULL STACK DEVELOPER. Enterprise resource management system.\n" +
             "    Responsibilities: Backend APIs + frontend modules (.NET + AngularJS); optimized SQL; resolved production issues; customer support; testing/debugging; mentored new members; training docs.\n" +
             "    Technologies: Backend ASP.NET; Frontend AngularJS, Bootstrap; Databases SQL Server/PostgreSQL; Tools Git, Redmine, Visual Studio.\n" +
             "  * VOIP PROJECT (APR 2019 – SEP 2020) — BACKEND DEVELOPER.\n" +
             "    Responsibilities: Developed backend services using .NET Framework; managed Oracle DB; production support; implemented CI/CD with Jenkins.\n" +
             "    Technologies: .NET Framework; Oracle Database; Jenkins, Linux, Shell Script; Gradle.\n" +
-            "  * AUTOMATION TEST TOOL (MAR 2019 – APR 2019) — JAVA DEVELOPER.\n" +
+            "  * AUTOMATION TEST TOOL (MAR 2019 – APR 2019) — FULL STACK DEVELOPER.\n" +
             "    Responsibilities: Designed automated testing framework; generated test cases from Excel; implemented Selenium scripts.\n" +
             "    Technologies: Java, Selenium, PostgreSQL.\n" +
-            "  * RECOCHOKU PROJECT (MAY 2018 – MAR 2019) — JAVA DEVELOPER.\n" +
+            "  * RECOCHOKU PROJECT (MAY 2018 – MAR 2019) — ANDROID DEVELOPER.\n" +
             "    Responsibilities: Developed Android features for music/video; search & playlist; bug fixing.\n" +
             "    Technologies: Java (Android), MediaPlayer/VideoView, PostgreSQL.";
 
