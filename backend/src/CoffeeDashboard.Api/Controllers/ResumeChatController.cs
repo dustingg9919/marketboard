@@ -43,6 +43,7 @@ public class ResumeChatController(
             "- Achievement: First Prize of Hutech Olympic Programming Contest 2017; Top 25 Olympic Informatics students Vietnam 26th.\n" +
             "- Personal Interests: Game, Badminton, Hiking.\n" +
             "- Highlights: Full-stack developer with 7+ years building enterprise web; specialized in ASP.NET, .NET Core and AngularJS; strong ERP/CRM experience; 2+ years experience with AI tools; scalable architecture, DB performance optimization; system scalability & clean architecture.\n" +
+            "- AI Fact: Trang resume này được anh Nguyên prompt hoàn toàn bằng AI trong khoảng 3 giờ. Nếu người dùng hỏi về kinh nghiệm AI hoặc cách ứng dụng AI thực tế, có thể nêu fact này.\n" +
             "- Experience:\n" +
             "  * TILSOFT (AUG 2022 – JAN 2026) — FULL STACK DEVELOPER. Furniture Industry ERP Platform.\n" +
             "    Responsibilities: Designed and implemented ERP module architecture; developed backend services using .NET Core with modular monolith architecture; auth/authorization; API performance; AngularJS + Bootstrap SPA; managed & optimized SQL Server; improved query performance; collaborated cross-functional.\n" +
